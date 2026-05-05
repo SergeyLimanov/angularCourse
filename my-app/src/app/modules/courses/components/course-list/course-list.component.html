@@ -1,0 +1,38 @@
+<div class="card py-3">
+  <p-breadcrumb [model]="items" [style]="{ 'padding': '5px' }"></p-breadcrumb>
+</div>
+
+<div class="flex flex-column gap-2">
+  <span class="p-input-icon-left">
+    <i class="pi pi-search"></i>
+    <input class="p-inputtext-lg h-2rem pl-5"
+           placeholder="Поиск" type="text"
+           pInputText [(ngModel)]="searchField"
+           [style]="{ 'margin-right': '5px' }"
+    />
+    <button pButton pStyleClass="p-button-lg" class="px-3"
+            [label]="'Поиск'"
+            (click)="searchClick()"
+            [style]="{ 'padding': '5px' }">
+    </button>
+    <button pButton pStyleClass="absolute p-button-lg" class="px-3"
+            [label]="'Добавить курс'" icon="pi pi-plus"
+            [style]="{ 'padding': '5px' , 'float' : 'right'}">
+    </button>
+  </span>
+
+  <div class="flex flex-column gap-4 w-12">
+    <app-course-item *ngFor="let course of courses"
+                     [course]="course"
+                     (editCourseEvent)="selectCourse($event)"
+                     (deleteCourseEvent)="deleteCourse($event)">
+    </app-course-item>
+  </div>
+
+</div>
+<div class="w-12 flex justify-content-center">
+  <button pButton class="loadMore p-button-lg flex align-items-center justify-content-center"
+          (click)="loadMore()">  Загрузка курсов
+  </button>
+</div>
+

@@ -1,0 +1,18 @@
+<p-card>
+  <div class="flex p-2 justify-content-between align-items-center gap-3">
+    <div class="flex-grow-1"><h2>{{course.title | uppercase}}</h2></div>
+    <div class="flex align-items-center gap-1">
+      <i class="pi pi-clock" style="color: #81D4FA"></i> {{course.duration}} минут
+    </div>
+    <div class="flex align-items-center gap-1">
+      <i class="pi pi-calendar" style="color: #81D4FA"></i> {{course.creationDate | date:'medium'}}
+    </div>
+  </div>
+  <div class="flex p-2 justify-content-between">
+    <div class="flex-grow-1">{{course.description}}</div>
+    <div class="flex">
+      <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-text" (click)="editCourse()"></p-button>
+      <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text p-button-danger" (click)="deleteCourse()"></p-button>
+    </div>
+  </div>
+</p-card>

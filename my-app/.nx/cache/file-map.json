@@ -1,0 +1,317 @@
+{
+  "version": "6.0",
+  "nxVersion": "18.0.8",
+  "deps": {
+    "@angular/animations": "^17.1.0",
+    "@angular/common": "^17.1.0",
+    "@angular/compiler": "^17.1.0",
+    "@angular/core": "^17.1.0",
+    "@angular/forms": "^17.1.0",
+    "@angular/platform-browser": "^17.1.0",
+    "@angular/platform-browser-dynamic": "^17.1.0",
+    "@angular/platform-server": "^17.1.0",
+    "@angular/router": "^17.1.0",
+    "@angular/ssr": "^17.1.1",
+    "express": "^4.18.2",
+    "primeflex": "^3.3.1",
+    "primeicons": "^6.0.1",
+    "primeng": "^17.4.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.14.3",
+    "@angular-devkit/build-angular": "^17.1.1",
+    "@angular-eslint/builder": "17.2.1",
+    "@angular-eslint/eslint-plugin": "17.2.1",
+    "@angular-eslint/eslint-plugin-template": "17.2.1",
+    "@angular-eslint/schematics": "17.2.1",
+    "@angular-eslint/template-parser": "17.2.1",
+    "@angular/cli": "^17.1.1",
+    "@angular/compiler-cli": "^17.1.0",
+    "@types/express": "^4.17.17",
+    "@types/jasmine": "~5.1.0",
+    "@types/node": "^18.18.0",
+    "@typescript-eslint/eslint-plugin": "6.19.0",
+    "@typescript-eslint/parser": "6.19.0",
+    "eslint": "^8.56.0",
+    "jasmine-core": "~5.1.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "typescript": "~5.3.2"
+  },
+  "pathMappings": {},
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "projectFileMap": {
+      "study-angular": [
+        {
+          "file": ".editorconfig",
+          "hash": "6686520031028425313"
+        },
+        {
+          "file": ".eslintrc.json",
+          "hash": "14645878845883387518"
+        },
+        {
+          "file": ".gitignore",
+          "hash": "13044518069027839699"
+        },
+        {
+          "file": ".vscode/extensions.json",
+          "hash": "5331566439708925252"
+        },
+        {
+          "file": ".vscode/launch.json",
+          "hash": "17038929134016848735"
+        },
+        {
+          "file": ".vscode/tasks.json",
+          "hash": "5336636969995539451"
+        },
+        {
+          "file": "README.md",
+          "hash": "8456844832747840750"
+        },
+        {
+          "file": "angular.json",
+          "hash": "246354545182707354"
+        },
+        {
+          "file": "package-lock.json",
+          "hash": "12716022726192956515"
+        },
+        {
+          "file": "package.json",
+          "hash": "8314887523506187174",
+          "deps": [
+            "npm:@angular/animations",
+            "npm:@angular/common",
+            "npm:@angular/compiler",
+            "npm:@angular/core",
+            "npm:@angular/forms",
+            "npm:@angular/platform-browser",
+            "npm:@angular/platform-browser-dynamic",
+            "npm:@angular/platform-server",
+            "npm:@angular/router",
+            "npm:@angular/ssr",
+            "npm:express",
+            "npm:primeflex",
+            "npm:primeicons",
+            "npm:primeng",
+            "npm:rxjs",
+            "npm:tslib",
+            "npm:zone.js",
+            "npm:@angular-devkit/build-angular",
+            "npm:@angular-eslint/builder",
+            "npm:@angular-eslint/eslint-plugin",
+            "npm:@angular-eslint/eslint-plugin-template",
+            "npm:@angular-eslint/schematics",
+            "npm:@angular-eslint/template-parser",
+            "npm:@angular/cli",
+            "npm:@angular/compiler-cli",
+            "npm:@types/express",
+            "npm:@types/jasmine",
+            "npm:@types/node",
+            "npm:@typescript-eslint/eslint-plugin",
+            "npm:@typescript-eslint/parser",
+            "npm:eslint",
+            "npm:jasmine-core",
+            "npm:karma",
+            "npm:karma-chrome-launcher",
+            "npm:karma-coverage",
+            "npm:karma-jasmine",
+            "npm:karma-jasmine-html-reporter",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "server.ts",
+          "hash": "7713808127824314998"
+        },
+        {
+          "file": "src/app/app-routing.module.ts",
+          "hash": "9063217279132129899"
+        },
+        {
+          "file": "src/app/app.component.html",
+          "hash": "10742419099015043049"
+        },
+        {
+          "file": "src/app/app.component.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "src/app/app.component.spec.ts",
+          "hash": "8978802692266013130"
+        },
+        {
+          "file": "src/app/app.component.ts",
+          "hash": "2178344827110890559"
+        },
+        {
+          "file": "src/app/app.module.server.ts",
+          "hash": "15400731916385811648"
+        },
+        {
+          "file": "src/app/app.module.ts",
+          "hash": "15365554956979459663"
+        },
+        {
+          "file": "src/app/interface/course.interface.ts",
+          "hash": "6863682221552557353"
+        },
+        {
+          "file": "src/app/interface/user.interface.ts",
+          "hash": "12899954107872592860"
+        },
+        {
+          "file": "src/app/modules/core/components/footer/footer.component.html",
+          "hash": "4870840326542635113"
+        },
+        {
+          "file": "src/app/modules/core/components/footer/footer.component.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "src/app/modules/core/components/footer/footer.component.spec.ts",
+          "hash": "10910183056555637205"
+        },
+        {
+          "file": "src/app/modules/core/components/footer/footer.component.ts",
+          "hash": "12691485112666940525"
+        },
+        {
+          "file": "src/app/modules/core/components/header/header.component.html",
+          "hash": "2051047353555067362"
+        },
+        {
+          "file": "src/app/modules/core/components/header/header.component.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "src/app/modules/core/components/header/header.component.spec.ts",
+          "hash": "18382709109671394819"
+        },
+        {
+          "file": "src/app/modules/core/components/header/header.component.ts",
+          "hash": "7707357721299225131"
+        },
+        {
+          "file": "src/app/modules/core/components/logo/logo.component.html",
+          "hash": "2566081175481528074"
+        },
+        {
+          "file": "src/app/modules/core/components/logo/logo.component.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "src/app/modules/core/components/logo/logo.component.spec.ts",
+          "hash": "14197725724933750553"
+        },
+        {
+          "file": "src/app/modules/core/components/logo/logo.component.ts",
+          "hash": "15776124736157522939"
+        },
+        {
+          "file": "src/app/modules/core/core.module.ts",
+          "hash": "15267258748960852772"
+        },
+        {
+          "file": "src/app/modules/courses/components/course-list/course-list.component.html",
+          "hash": "208682406912475844"
+        },
+        {
+          "file": "src/app/modules/courses/components/course-list/course-list.component.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "src/app/modules/courses/components/course-list/course-list.component.spec.ts",
+          "hash": "8283889738317304001"
+        },
+        {
+          "file": "src/app/modules/courses/components/course-list/course-list.component.ts",
+          "hash": "7413572259746244380"
+        },
+        {
+          "file": "src/app/modules/courses/components/course/course.component.html",
+          "hash": "5877339256980625451"
+        },
+        {
+          "file": "src/app/modules/courses/components/course/course.component.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "src/app/modules/courses/components/course/course.component.spec.ts",
+          "hash": "16100763429628872793"
+        },
+        {
+          "file": "src/app/modules/courses/components/course/course.component.ts",
+          "hash": "1879079330982100178"
+        },
+        {
+          "file": "src/app/modules/courses/courses.component.html",
+          "hash": "16730471636673688948"
+        },
+        {
+          "file": "src/app/modules/courses/courses.component.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "src/app/modules/courses/courses.component.spec.ts",
+          "hash": "17256402542759603297"
+        },
+        {
+          "file": "src/app/modules/courses/courses.component.ts",
+          "hash": "16480383165873945095"
+        },
+        {
+          "file": "src/app/modules/courses/courses.module.ts",
+          "hash": "1418269628275618173"
+        },
+        {
+          "file": "src/assets/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "src/assets/Logo.png",
+          "hash": "7071212672110250004"
+        },
+        {
+          "file": "src/favicon.ico",
+          "hash": "3988961587069885523"
+        },
+        {
+          "file": "src/index.html",
+          "hash": "5256841527297541819"
+        },
+        {
+          "file": "src/main.server.ts",
+          "hash": "15745908617027977269"
+        },
+        {
+          "file": "src/main.ts",
+          "hash": "8908051918418879274"
+        },
+        {
+          "file": "src/styles.scss",
+          "hash": "14212636752050586246"
+        },
+        {
+          "file": "tsconfig.app.json",
+          "hash": "17948364081101022842"
+        },
+        {
+          "file": "tsconfig.json",
+          "hash": "6830907402848794383"
+        },
+        {
+          "file": "tsconfig.spec.json",
+          "hash": "15575553540147145788"
+        }
+      ]
+    },
+    "nonProjectFiles": []
+  }
+}

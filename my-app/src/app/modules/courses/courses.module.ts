@@ -9,10 +9,12 @@ import { BreadcrumbModule } from "primeng/breadcrumb";
 import {CoursesComponent} from "./courses.component";
 import {InputTextModule} from "primeng/inputtext";
 import {StyleClassModule} from "primeng/styleclass";
-import { CourseBorderDirective } from './directive/course-border.directive';
-import { DurationPipe } from './pipes/duration.pipe';
-import { FilterPipe } from './pipes/filter.pipe';
-import { OrderByPipe } from './pipes/order-by.pipe';
+import { CourseBorderDirective } from '../../shared/directive/course-border.directive';
+import { DurationPipe } from '../../shared/pipes/duration.pipe';
+import { FilterPipe } from '../../shared/pipes/filter.pipe';
+import { OrderByPipe } from '../../shared/pipes/order-by.pipe';
+import {ConfirmationService} from "primeng/api";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @NgModule({
   declarations: [
@@ -24,16 +26,20 @@ import { OrderByPipe } from './pipes/order-by.pipe';
     FilterPipe,
     OrderByPipe
   ],
-    imports: [
-        CommonModule,
-        CardModule,
-        ButtonModule,
-        InputTextModule,
-        FormsModule,
-        BreadcrumbModule,
-        StyleClassModule,
-        NgOptimizedImage
-    ],
+  imports: [
+    CommonModule,
+    CardModule,
+    ButtonModule,
+    InputTextModule,
+    FormsModule,
+    BreadcrumbModule,
+    StyleClassModule,
+    NgOptimizedImage,
+    ConfirmDialogModule
+  ],
+  providers: [
+    ConfirmationService,
+  ],
   exports: [CoursesComponent]
 })
 export class CoursesModule { }

@@ -23,5 +23,5 @@ import {ButtonModule} from "primeng/button";
     ButtonModule
   ]
 })
-export class CoreModule {
+export class SharedModule {
 }

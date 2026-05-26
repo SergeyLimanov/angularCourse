@@ -1,7 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-//Тема lara-light-blue
-*{
+
+body {
+  margin: 0;
   padding: 0;
+  background-color: #E2E8F0;
 }
 
 html {
@@ -9,3 +11,4 @@ html {
   font-size: 14px;
   line-height: 24px;
 }
+

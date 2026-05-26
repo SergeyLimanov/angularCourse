@@ -1,14 +1,16 @@
-import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit,
-  Component, DoCheck, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
-import { MenuItem } from "primeng/api";
+import {
+  AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, ChangeDetectorRef,
+  Component, DoCheck, OnChanges, OnDestroy, OnInit, SimpleChanges
+} from '@angular/core';
+import { ConfirmationService, MenuItem } from "primeng/api";
 import {Course} from "../../../../interface/course.interface";
-import {FilterPipe} from "../../pipes/filter.pipe";
+import {CoursesService} from "../../../../services/courses.service";
+import {FilterPipe} from "../../../../shared/pipes/filter.pipe";
 
 @Component({
   selector: 'app-course-list',
   templateUrl: './course-list.component.html',
-  styleUrl: './course-list.component.scss',
-  providers: [FilterPipe]
+  styleUrl: './course-list.component.scss'
 })
 export class CourseListComponent implements OnChanges, OnInit, DoCheck, AfterContentInit,
   AfterContentChecked, AfterViewInit, AfterViewChecked, OnDestroy {
@@ -16,7 +18,12 @@ export class CourseListComponent implements OnChanges, OnInit, DoCheck, AfterCon
   searchField: string = "";
   filterCourses: Course[] =[];
   items: MenuItem[] = [];
-  constructor(private filterPipe: FilterPipe) {}
+  private filterPipe = new FilterPipe();
+
+
+  constructor(private cdr: ChangeDetectorRef,
+              private coursesService: CoursesService,
+              private confirmationService: ConfirmationService) { }
 
 //Вызывается после инициализации компонента.
   public ngOnInit(): void {
@@ -24,96 +31,71 @@ export class CourseListComponent implements OnChanges, OnInit, DoCheck, AfterCon
       { icon: 'pi pi-home' }, // Добавление иконки домика
       { label: 'Курсы' }
     ];
-
-    this.courses = [
-     {
-       id:1,
-       title: "Java Programming Masterclass",
-       creationDate: new Date("2023-01-26"),
-       duration: 90,
-       description: "This masterclass covers advanced Java programming concepts including multi-threading, design patterns, and database connectivity. Participants will gain hands-on experience in building complex Java applications.",
-       topRated: false,
-     },
-     {
-       id: 2,
-       title: "Python for Data Science",
-       creationDate: new Date("2023-03-10"),
-       duration: 60,
-       description: "Learn Python programming language with a focus on its applications in data science. The courses covers data analysis, machine learning, and data visualization using popular Python libraries such as NumPy, Pandas, and Matplotlib.",
-       topRated: true,
-     },
-     {
-       id: 3,
-       title: "Web Development Bootcamp",
-       creationDate: new Date("2023-02-05"),
-       duration: 120,
-       description: "Join this intensive bootcamp to learn modern web development technologies including HTML, CSS, JavaScript and Node.js. By the end of the courses, you'll be able to build dynamic and interactive web applications.",
-       topRated: true,
-     },
-     {
-       id: 4,
-       title: "Machine Learning Fundamentals",
-       creationDate: new Date("2023-04-20"),
-       duration: 120,
-       description: "Explore the basics of machine learning algorithms and techniques in this courses. Topics include supervised and unsupervised learning, regression, classification, and clustering. Practical exercises and projects are included.",
-       topRated: true,
-     },
-     {
-       id: 5,
-       title: "iOS App Development with Swift",
-       creationDate: new Date("2023-06-12"),
-       duration: 100,
-       description: "Explore the basics of machine learning algorithms and techniques in this courses. Topics include supervised and unsupervised learning, regression, classification, and clustering. Practical exercises and projects are included.",
-       topRated: false,
-     },
-   ];
+    // Получаем данные курсов при инициализации компонента
+    this.coursesService.getCourses().subscribe(
+      data => {
+        this.courses = data;
+        console.log('Courses:', this.courses); // Для проверки, можно удалить
+      },
+      error => {
+        console.error('Error fetching courses', error);
+      }
+    );
     this.filterCourses = this.courses;
   }
 
   //Вызывается при изменении входных свойств компонента
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log("ngOnChanges");
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
 
-  ngDoCheck(): void {
-    console.log("ngDoCheck");
-  }
+  ngDoCheck(): void {}
 
-  ngAfterContentInit(): void {
-    console.log("ngAfterContentInit");
-  }
+  ngAfterContentInit(): void {}
 
-  ngAfterContentChecked(): void {
-    console.log("ngAfterContentChecked");
-  }
+  ngAfterContentChecked(): void {}
 
-  ngAfterViewInit(): void {
-    console.log("ngAfterViewInit");
-  }
+  ngAfterViewInit(): void {}
 
-  ngAfterViewChecked(): void {
-    console.log("ngAfterViewChecked");
-  }
+  ngAfterViewChecked(): void {}
 
-  ngOnDestroy(): void {
-    console.log("ngOnDestroy");
-  }
+  ngOnDestroy(): void {}
 
   public selectCourse(course: Course): void {
     console.log(course)
   }
 
   public deleteCourse(course: Course): void {
-    console.log(course.id)
+    this.confirmationService.confirm({
+      message: `Вы уверены, что хотите удалить курс ${course.title}?`,
+      header: 'Удалить курс?',
+      acceptLabel: 'Удалить',
+      rejectLabel: 'Отмена',
+      accept: () => {
+        this.coursesService.remove(course.id);
+        this.coursesService.getCourses().subscribe(
+          data => {
+            this.courses = data;
+            this.filterCourses = this.courses;
+          }
+        );
+      },
+      reject: () => {},
+    });
   }
 
   public searchClick(): void {
+    console.log(this.searchField);
     this.filterCourses = this.filterPipe.transform(this.courses, this.searchField);
+
   }
 
   public clearFilter(): void {
     this.searchField = "";
-    this.filterCourses = this.courses; // Отображаем все курсы при сбросе поиска
+    this.filterCourses = this.filterPipe.transform(this.courses, this.searchField);
+    this.cdr.detectChanges();
+  }
+
+  trackByCourseId(index: number, course: Course): number {
+    return course.id;
   }
 
   public loadMore(): void {

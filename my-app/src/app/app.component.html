@@ -1,3 +1,10 @@
-<app-header></app-header>
-<app-courses></app-courses>
-<app-footer></app-footer>
+<div class="app-container">
+  <app-header
+    [currentUser]="currentUser"
+    [isAuthenticated]="isAuthenticated"
+    (logoutEvent)="logout($event)"
+  ></app-header>
+  <login-page class="flex justify-content-center" *ngIf="!isAuthenticated" (loginEvent)="login($event)"></login-page>
+  <app-courses *ngIf="isAuthenticated"></app-courses>
+  <app-footer></app-footer>
+</div>

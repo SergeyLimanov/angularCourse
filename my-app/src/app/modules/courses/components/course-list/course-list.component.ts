@@ -1,5 +1,5 @@
 import {
-  AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, ChangeDetectorRef,
+  AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef,
   Component, DoCheck, OnChanges, OnDestroy, OnInit, SimpleChanges
 } from '@angular/core';
 import { ConfirmationService, MenuItem } from "primeng/api";
@@ -10,10 +10,10 @@ import {FilterPipe} from "../../../../shared/pipes/filter.pipe";
 @Component({
   selector: 'app-course-list',
   templateUrl: './course-list.component.html',
-  styleUrl: './course-list.component.scss'
+  styleUrl: './course-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default // По умолчанию для «умного» компонента
 })
-export class CourseListComponent implements OnChanges, OnInit, DoCheck, AfterContentInit,
-  AfterContentChecked, AfterViewInit, AfterViewChecked, OnDestroy {
+export class CourseListComponent {
   public courses: Course[] = [];
   searchField: string = "";
   filterCourses: Course[] =[];
@@ -31,33 +31,19 @@ export class CourseListComponent implements OnChanges, OnInit, DoCheck, AfterCon
       { icon: 'pi pi-home' }, // Добавление иконки домика
       { label: 'Курсы' }
     ];
-    // Получаем данные курсов при инициализации компонента
+    // Загрузка курсов
     this.coursesService.getCourses().subscribe(
       data => {
         this.courses = data;
-        console.log('Courses:', this.courses); // Для проверки, можно удалить
+        this.filterCourses = this.courses;
+        this.cdr.markForCheck();
       },
       error => {
         console.error('Error fetching courses', error);
       }
     );
-    this.filterCourses = this.courses;
   }
 
-  //Вызывается при изменении входных свойств компонента
-  ngOnChanges(changes: SimpleChanges): void {}
-
-  ngDoCheck(): void {}
-
-  ngAfterContentInit(): void {}
-
-  ngAfterContentChecked(): void {}
-
-  ngAfterViewInit(): void {}
-
-  ngAfterViewChecked(): void {}
-
-  ngOnDestroy(): void {}
 
   public selectCourse(course: Course): void {
     console.log(course)
@@ -71,26 +57,29 @@ export class CourseListComponent implements OnChanges, OnInit, DoCheck, AfterCon
       rejectLabel: 'Отмена',
       accept: () => {
         this.coursesService.remove(course.id);
-        this.coursesService.getCourses().subscribe(
-          data => {
-            this.courses = data;
-            this.filterCourses = this.courses;
-          }
+        // Локальное удаление курса
+        this.courses = this.courses.filter(c => c.id !== course.id);
+        this.filterCourses = this.courses.filter(course =>
+          course.title.toLowerCase().includes(this.searchField.toLowerCase())
         );
+        this.cdr.detectChanges();
       },
       reject: () => {},
     });
   }
 
+
   public searchClick(): void {
     console.log(this.searchField);
-    this.filterCourses = this.filterPipe.transform(this.courses, this.searchField);
-
+    // Применяем фильтр по названию курса
+    this.filterCourses = this.courses.filter(course =>
+      course.title.toLowerCase().includes(this.searchField.toLowerCase())
+    );
   }
 
   public clearFilter(): void {
     this.searchField = "";
-    this.filterCourses = this.filterPipe.transform(this.courses, this.searchField);
+    this.filterCourses = this.courses;
     this.cdr.detectChanges();
   }
 

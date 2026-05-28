@@ -1,11 +1,10 @@
 import {
-  AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef,
-  Component, DoCheck, OnChanges, OnDestroy, OnInit, SimpleChanges
+   ChangeDetectionStrategy, ChangeDetectorRef,
+  Component, OnInit,
 } from '@angular/core';
 import { ConfirmationService, MenuItem } from "primeng/api";
 import {Course} from "../../../../interface/course.interface";
 import {CoursesService} from "../../../../services/courses.service";
-import {FilterPipe} from "../../../../shared/pipes/filter.pipe";
 
 @Component({
   selector: 'app-course-list',
@@ -13,12 +12,13 @@ import {FilterPipe} from "../../../../shared/pipes/filter.pipe";
   styleUrl: './course-list.component.scss',
   changeDetection: ChangeDetectionStrategy.Default // По умолчанию для «умного» компонента
 })
-export class CourseListComponent {
+export class CourseListComponent implements OnInit {
   public courses: Course[] = [];
   searchField: string = "";
   filterCourses: Course[] =[];
   items: MenuItem[] = [];
-  private filterPipe = new FilterPipe();
+  public isAddingCourse: boolean = false; // Флаг для управления отображением формы
+  courseToEdit: Course | null = null; // Данные курса для редактирования
 
 
   constructor(private cdr: ChangeDetectorRef,
@@ -44,9 +44,25 @@ export class CourseListComponent {
     );
   }
 
+  public openAddCourseForm(): void {
+    console.log('Открыть форму добавления курса');
+    this.isAddingCourse = true;
+    console.log('isAddingCourse:', this.isAddingCourse);
+  }
 
+  public closeAddCourseForm(): void {
+    console.log('Закрыть форму добавления курса');
+    this.isAddingCourse = false;
+    console.log('isAddingCourse:', this.isAddingCourse);
+  }
+
+  openEditCourseForm(course: Course): void {
+    this.isAddingCourse = true; // Показываем форму редактирования курса
+    this.courseToEdit = course; // Передаем данные курса для редактирования
+  }
   public selectCourse(course: Course): void {
-    console.log(course)
+    console.log('Открыть форму редактирования курса')
+    this.openEditCourseForm(course); // Открываем форму редактирования
   }
 
   public deleteCourse(course: Course): void {
@@ -67,7 +83,6 @@ export class CourseListComponent {
       reject: () => {},
     });
   }
-
 
   public searchClick(): void {
     console.log(this.searchField);

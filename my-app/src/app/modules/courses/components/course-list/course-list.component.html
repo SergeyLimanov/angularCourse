@@ -17,6 +17,7 @@
     </button>
     <button pButton pStyleClass="absolute p-button-lg" class="px-3"
             [label]="'Добавить курс'" icon="pi pi-plus"
+            (click)="openAddCourseForm()"
             [style]="{ 'padding': '5px' , 'float' : 'right'}">
     </button>
   </span>
@@ -28,10 +29,9 @@
                      (deleteCourseEvent)="deleteCourse($event)">
     </app-course-item>
   </div>
-
   <ng-template #noData>
-    <div class="flex flex-column align-items-center notFind justify-content-center" style="height: 100%; padding: 1.1rem;">
-      <img ngSrc="../../../../../assets/noDataIcon.png" height="168" width="168"/>
+    <div class="flex flex-column align-items-center justify-content-center" style="height: 100%;">
+      <img src="././assets/noDataIcon.png" alt="" class="m-4">
       <h2>Ничего не найдено</h2>
       <p-button label="Сбросить фильтры" styleClass="p-button-lg" (click)="clearFilter()"></p-button>
     </div>
@@ -42,5 +42,14 @@
           (click)="loadMore()">  Загрузка курсов
   </button>
 </div>
+
+
+
+<p-dialog [(visible)]="isAddingCourse" [modal]="true" [closable]="false" >
+  <app-course-add
+    [courseToEdit]="courseToEdit"
+    (formClosed)="closeAddCourseForm()">
+  </app-course-add>
+</p-dialog>
 
 <p-confirmDialog></p-confirmDialog>

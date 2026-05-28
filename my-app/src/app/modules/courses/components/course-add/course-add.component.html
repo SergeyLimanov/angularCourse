@@ -1,0 +1,46 @@
+<div class="card py-2">
+  <p-breadcrumb [model]="coursesMenu" ></p-breadcrumb>
+</div>
+
+<p-card [header]="courseToEdit ? 'Редактировать курс' : 'Добавить курс'">
+  <div class="grid p-fluid ">
+    <div class="flex flex-column card-container m-2 col-6">
+      <div>Наименование*</div>
+      <input type="text" pInputText [(ngModel)]="newCourse.title" />
+    </div>
+    <div class="flex flex-column card-container m-2 col-6">
+      <div>Описание*</div>
+      <textarea
+        rows="5"
+        cols="50"
+        pInputTextarea
+        [(ngModel)]="newCourse.description">
+      </textarea>
+    </div>
+    <div class="flex flex-column card-container m-2 col-6">
+      <div>Продолжительность*</div>
+      <app-duration [duration]="newCourse.duration"> </app-duration>
+    </div>
+    <div class="flex flex-column card-container m-2 col-6">
+      <div>Дата*</div>
+      <p-calendar [(ngModel)]="newCourse.creationDate" [showIcon]="true"></p-calendar>
+    </div>
+    <div class="flex flex-column card-container m-2 col-6">
+      <div>Авторы*</div>
+      <app-author></app-author>
+    </div>
+  </div>
+  <div class="flex  ">
+    <div class="flex ">
+      <p-button label="Отмена" styleClass="p-button-secondary" (click)="cancel()"></p-button>
+    </div>
+    <div class="flex ml-3">
+      <p-button label="Сохранить" (click)="save()"></p-button>
+    </div>
+
+
+  </div>
+
+</p-card>
+
+

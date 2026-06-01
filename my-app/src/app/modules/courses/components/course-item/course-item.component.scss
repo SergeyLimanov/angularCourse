@@ -1,0 +1,20 @@
+::ng-deep .top-rated {
+  .p-card-body {
+    background: rgba(57, 157, 161, 0.5);
+    border-radius: 6px;
+  }
+
+  .p-card-body {
+    padding: 1.1rem;
+    height: 144px;
+  }
+}
+
+:host ::ng-deep .p-card-body, .p-card-content {
+  padding: 0 1rem;
+}
+.desc {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}

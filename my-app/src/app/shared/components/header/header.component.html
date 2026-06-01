@@ -1,0 +1,18 @@
+<header class="flex py-3 px-4 justify-content-center gap-5 main-header">
+  <div class="flex-grow-1 px-5">
+    <app-logo></app-logo>
+  </div>
+  <div  class="p-col-2 flex align-items-center">
+    <span *ngIf="isAuthenticated"><i class="pi pi-user px-2"></i>{{currentUser}}</span>
+  </div>
+  <div *ngIf="isAuthenticated" class="p-col-1 flex align-items-center">
+    <p-button
+      label="Выход"
+      styleClass="p-button-text"
+      icon="pi pi-sign-out"
+      [style]="{color: 'black'}"
+      (click)="logout()">
+    </p-button>
+  </div>
+</header>
+

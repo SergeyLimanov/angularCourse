@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {CourseListComponent} from "./components/course-list/course-list.component";
 import {CourseItemComponent} from "./components/course-item/course-item.component";
 import { CardModule } from 'primeng/card';
@@ -9,12 +9,22 @@ import { BreadcrumbModule } from "primeng/breadcrumb";
 import {CoursesComponent} from "./courses.component";
 import {InputTextModule} from "primeng/inputtext";
 import {StyleClassModule} from "primeng/styleclass";
+import { CourseBorderDirective } from '../../shared/directive/course-border.directive';
+import { DurationPipe } from '../../shared/pipes/duration.pipe';
+import { FilterPipe } from '../../shared/pipes/filter.pipe';
+import { OrderByPipe } from '../../shared/pipes/order-by.pipe';
+import {ConfirmationService} from "primeng/api";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @NgModule({
   declarations: [
     CourseItemComponent,
     CourseListComponent,
-    CoursesComponent
+    CoursesComponent,
+    CourseBorderDirective,
+    DurationPipe,
+    FilterPipe,
+    OrderByPipe
   ],
   imports: [
     CommonModule,
@@ -23,7 +33,12 @@ import {StyleClassModule} from "primeng/styleclass";
     InputTextModule,
     FormsModule,
     BreadcrumbModule,
-    StyleClassModule
+    StyleClassModule,
+    NgOptimizedImage,
+    ConfirmDialogModule
+  ],
+  providers: [
+    ConfirmationService,
   ],
   exports: [CoursesComponent]
 })

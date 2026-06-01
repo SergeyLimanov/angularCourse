@@ -1,18 +1,26 @@
-<p-card>
+<p-card [ngClass]="{'top-rated': course.topRated}" appCourseBorder [course]="course">
   <div class="flex p-2 justify-content-between align-items-center gap-3">
-    <div class="flex-grow-1"><h2>{{course.title | uppercase}}</h2></div>
-    <div class="flex align-items-center gap-1">
-      <i class="pi pi-clock" style="color: #81D4FA"></i> {{course.duration}} минут
+    <div class="flex-grow-1">
+      <h2>{{course.title | uppercase}}
+        <i *ngIf="course.topRated" class="pi pi-star-fill loading-icon-size" style="color: #e56c0a"></i>
+      </h2>
     </div>
     <div class="flex align-items-center gap-1">
-      <i class="pi pi-calendar" style="color: #81D4FA"></i> {{course.creationDate | date:'medium'}}
+      <div class="flex align-items-center gap-1">
+        <i class="pi pi-clock" style="color: #81D4FA"></i> {{course.duration | duration }}
+      </div>
+    </div>
+    <div class="flex align-items-center gap-1">
+      <i class="pi pi-calendar"
+         style="color: #81D4FA"></i> {{ course.creationDate | date: 'dd MMMM y года' : '+0000' : 'ru'}}
     </div>
   </div>
   <div class="flex p-2 justify-content-between">
     <div class="flex-grow-1">{{course.description}}</div>
     <div class="flex">
       <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-text" (click)="editCourse()"></p-button>
-      <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text p-button-danger" (click)="deleteCourse()"></p-button>
+      <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text p-button-danger"
+                (click)="deleteCourse()"></p-button>
     </div>
   </div>
 </p-card>

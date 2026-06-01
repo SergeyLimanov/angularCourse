@@ -20,19 +20,27 @@
             [style]="{ 'padding': '5px' , 'float' : 'right'}">
     </button>
   </span>
+  <div *ngIf="filterCourses.length > 0; else noData" class="flex flex-column gap-4 w-12">
+    <app-course-item *ngFor="let course of filterCourses | orderBy: 'creationDate':'desc'
+    trackBy: trackByCourseId" [course]="course"
 
-  <div class="flex flex-column gap-4 w-12">
-    <app-course-item *ngFor="let course of courses"
-                     [course]="course"
                      (editCourseEvent)="selectCourse($event)"
                      (deleteCourseEvent)="deleteCourse($event)">
     </app-course-item>
   </div>
 
+  <ng-template #noData>
+    <div class="flex flex-column align-items-center notFind justify-content-center" style="height: 100%; padding: 1.1rem;">
+      <img ngSrc="../../../../../assets/noDataIcon.png" height="168" width="168"/>
+      <h2>Ничего не найдено</h2>
+      <p-button label="Сбросить фильтры" styleClass="p-button-lg" (click)="clearFilter()"></p-button>
+    </div>
+  </ng-template>
 </div>
-<div class="w-12 flex justify-content-center">
+<div class="w-12 flex justify-content-center" *ngIf="filterCourses.length > 0">
   <button pButton class="loadMore p-button-lg flex align-items-center justify-content-center"
           (click)="loadMore()">  Загрузка курсов
   </button>
 </div>
 
+<p-confirmDialog></p-confirmDialog>

@@ -1,0 +1,31 @@
+.pageBackground {
+}
+
+.login {
+  background: #E2E8F0;
+  width: 400px;
+  margin: 0 20px 35px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.p-field {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.forgot-password {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.login-button {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+}

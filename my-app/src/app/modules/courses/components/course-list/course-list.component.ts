@@ -67,7 +67,7 @@ export class CourseListComponent implements OnInit {
 
   public deleteCourse(course: Course): void {
     this.confirmationService.confirm({
-      message: `Вы уверены, что хотите удалить курс ${course.title}?`,
+      message: `Вы действительно хотите удалить этот курс ${course.title}?`,
       header: 'Удалить курс?',
       acceptLabel: 'Удалить',
       rejectLabel: 'Отмена',

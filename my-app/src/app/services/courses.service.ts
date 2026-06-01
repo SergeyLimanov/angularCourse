@@ -12,7 +12,7 @@ export class CoursesService {
       id:1,
       title: "Java Programming Masterclass",
       creationDate: new Date("2023-01-26"),
-      duration: 90,
+      duration: 55,
       description: "This masterclass covers advanced Java programming concepts including multi-threading, design patterns, and database connectivity. Participants will gain hands-on experience in building complex Java applications.",
       topRated: false,
     },

@@ -8,32 +8,25 @@ import { FormsModule } from "@angular/forms";
 import { BreadcrumbModule } from "primeng/breadcrumb";
 import {CoursesComponent} from "./courses.component";
 import {InputTextModule} from "primeng/inputtext";
-import { DurationPipe } from '../../shared/pipes/duration.pipe';
-import { FilterPipe } from '../../shared/pipes/filter.pipe';
-import { OrderByPipe } from '../../shared/pipes/order-by.pipe';
 import {ConfirmationService} from "primeng/api";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import { CourseAddComponent } from './components/course-add/course-add.component';
 import {CalendarModule} from "primeng/calendar";
 import {InputNumberModule} from "primeng/inputnumber";
 import {InputTextareaModule} from "primeng/inputtextarea";
-import {AuthorComponent} from "./components/course-add/components/author/author.component";
-import {CourseDurationComponent} from "./components/course-add/components/course-duration/course-duration.component";
-import {CourseBorderDirective} from "../../shared/directive/course-border.directive";
+import {AuthorComponent} from "./components/course-add/author/author.component";
+import {CourseDurationComponent} from "./components/course-add/course-duration/course-duration.component";
 import {DialogModule} from "primeng/dialog";
+import {SharedModule} from "../../shared/shared.module";
 
 @NgModule({
   declarations: [
     CourseListComponent,
     CourseItemComponent,
     CoursesComponent,
-    DurationPipe,
-    OrderByPipe,
-    FilterPipe,
     CourseAddComponent,
     CourseDurationComponent,
-    AuthorComponent,
-    CourseBorderDirective
+    AuthorComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +40,7 @@ import {DialogModule} from "primeng/dialog";
     InputNumberModule,
     CalendarModule,
     DialogModule,
-
+    SharedModule
   ],
   providers: [
     ConfirmationService,

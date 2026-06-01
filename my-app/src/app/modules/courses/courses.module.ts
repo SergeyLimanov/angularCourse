@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import {CommonModule, NgOptimizedImage} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {CourseListComponent} from "./components/course-list/course-list.component";
 import {CourseItemComponent} from "./components/course-item/course-item.component";
 import { CardModule } from 'primeng/card';
@@ -8,23 +8,25 @@ import { FormsModule } from "@angular/forms";
 import { BreadcrumbModule } from "primeng/breadcrumb";
 import {CoursesComponent} from "./courses.component";
 import {InputTextModule} from "primeng/inputtext";
-import {StyleClassModule} from "primeng/styleclass";
-import { CourseBorderDirective } from '../../shared/directive/course-border.directive';
-import { DurationPipe } from '../../shared/pipes/duration.pipe';
-import { FilterPipe } from '../../shared/pipes/filter.pipe';
-import { OrderByPipe } from '../../shared/pipes/order-by.pipe';
 import {ConfirmationService} from "primeng/api";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import { CourseAddComponent } from './components/course-add/course-add.component';
+import {CalendarModule} from "primeng/calendar";
+import {InputNumberModule} from "primeng/inputnumber";
+import {InputTextareaModule} from "primeng/inputtextarea";
+import {AuthorComponent} from "./components/course-add/author/author.component";
+import {CourseDurationComponent} from "./components/course-add/course-duration/course-duration.component";
+import {DialogModule} from "primeng/dialog";
+import {SharedModule} from "../../shared/shared.module";
 
 @NgModule({
   declarations: [
-    CourseItemComponent,
     CourseListComponent,
+    CourseItemComponent,
     CoursesComponent,
-    CourseBorderDirective,
-    DurationPipe,
-    FilterPipe,
-    OrderByPipe
+    CourseAddComponent,
+    CourseDurationComponent,
+    AuthorComponent
   ],
   imports: [
     CommonModule,
@@ -32,14 +34,17 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
     ButtonModule,
     InputTextModule,
     FormsModule,
+    ConfirmDialogModule,
     BreadcrumbModule,
-    StyleClassModule,
-    NgOptimizedImage,
-    ConfirmDialogModule
+    InputTextareaModule,
+    InputNumberModule,
+    CalendarModule,
+    DialogModule,
+    SharedModule
   ],
   providers: [
     ConfirmationService,
   ],
-  exports: [CoursesComponent]
+  exports: [CoursesComponent, CourseAddComponent]
 })
 export class CoursesModule { }

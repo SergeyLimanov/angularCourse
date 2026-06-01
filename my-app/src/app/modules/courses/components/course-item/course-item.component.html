@@ -1,4 +1,6 @@
-<p-card [ngClass]="{'top-rated': course.topRated}" appCourseBorder [course]="course">
+<p-card [ngClass]="{'top-rated': course.topRated}"
+        appCourseBorder
+        [course]="course">
   <div class="flex p-2 justify-content-between align-items-center gap-3">
     <div class="flex-grow-1">
       <h2>{{course.title | uppercase}}
@@ -7,12 +9,12 @@
     </div>
     <div class="flex align-items-center gap-1">
       <div class="flex align-items-center gap-1">
-        <i class="pi pi-clock" style="color: #81D4FA"></i> {{course.duration | duration }}
+        <i class="pi pi-clock" style="color: #64748B"></i> {{course.duration | duration }}
       </div>
     </div>
     <div class="flex align-items-center gap-1">
       <i class="pi pi-calendar"
-         style="color: #81D4FA"></i> {{ course.creationDate | date: 'dd MMMM y года' : '+0000' : 'ru'}}
+         style="color: #64748B"></i> {{ course.creationDate | date: 'dd MMMM y года' : '+0000' : 'ru'}}
     </div>
   </div>
   <div class="flex p-2 justify-content-between">

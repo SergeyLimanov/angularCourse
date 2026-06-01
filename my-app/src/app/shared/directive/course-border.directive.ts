@@ -11,9 +11,14 @@ export class CourseBorderDirective implements AfterViewInit{
 
   constructor(private el: ElementRef, private renderer: Renderer2) {}
 
-  public AfterViewInit(): void {
+  public ngAfterViewInit(): void {
     this.oldDate.setDate(this.oldDate.getDate() - 14); // Устанавливаем дату, отстоящую на 14 дней назад
 
+    const cardElement = this.el.nativeElement.querySelector('.p-card');
+    if (!cardElement) {
+      console.warn('Не удалось найти элемент .p-card для стилизации');
+      return;
+    }
     const child = this.el.nativeElement.children[0]; // Получаем первого потомка элемента, к которому применяется директива
 
     if (this.course.creationDate < this.currentDate  && this.course.creationDate >= this.oldDate ) // Проверяем, является ли курс новым
@@ -23,6 +28,5 @@ export class CourseBorderDirective implements AfterViewInit{
       this.renderer.setStyle(child, 'border', '3px solid blue'); // Добавляем стиль к элементу
   }
 
-  ngAfterViewInit(): void {
-  }
+
 }

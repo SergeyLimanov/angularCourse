@@ -44,12 +44,4 @@
 </div>
 
 
-
-<p-dialog [(visible)]="isAddingCourse" [modal]="true" [closable]="false" >
-  <app-course-add
-    [courseToEdit]="courseToEdit"
-    (formClosed)="closeAddCourseForm()">
-  </app-course-add>
-</p-dialog>
-
 <p-confirmDialog></p-confirmDialog>

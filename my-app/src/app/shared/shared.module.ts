@@ -4,10 +4,7 @@ import {HeaderComponent} from './components/header/header.component';
 import {LogoComponent} from './components/logo/logo.component';
 import {FooterComponent} from './components/footer/footer.component';
 import {ButtonModule} from "primeng/button";
-import {DurationPipe} from './pipes/duration.pipe';
-import {FilterPipe} from './pipes/filter.pipe';
-import {OrderByPipe} from './pipes/order-by.pipe';
-import {CourseBorderDirective} from './directive/course-border.directive';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 @NgModule({
@@ -15,19 +12,12 @@ import {CourseBorderDirective} from './directive/course-border.directive';
     HeaderComponent,
     LogoComponent,
     FooterComponent,
-    DurationPipe,
-    FilterPipe,
-    OrderByPipe,
-    CourseBorderDirective
+    NotFoundComponent
   ],
   exports: [
     HeaderComponent,
     LogoComponent,
-    FooterComponent,
-    DurationPipe,
-    FilterPipe,
-    OrderByPipe,
-    CourseBorderDirective
+    FooterComponent
   ],
   imports: [
     CommonModule,

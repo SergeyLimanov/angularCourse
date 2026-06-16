@@ -33,6 +33,7 @@ registerLocaleData(localeRu);
     BrowserAnimationsModule,
     InputNumberModule,
     InputTextareaModule,
+    AppRoutingModule
   ],
   providers: [
     provideClientHydration()

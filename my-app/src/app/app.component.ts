@@ -20,11 +20,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.isAuthenticated = this.authService.isAuthenticated();
     this.currentUser = this.authService.getUserInfo() || '';
-    if (this.isAuthenticated) {
-      this.router.navigate(['/courses']);
-    } else {
-      this.router.navigate(['/login']);
-    }
   }
 
   login(event: any) {

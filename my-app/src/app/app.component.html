@@ -2,7 +2,7 @@
   <app-header
     [currentUser]="currentUser"
     [isAuthenticated]="isAuthenticated"
-    (logoutEvent)="logout($event)"
+    (logoutEvent)="logout()"
   ></app-header>
   <login-page class="flex justify-content-center" *ngIf="!isAuthenticated" (loginEvent)="login($event)"></login-page>
   <app-courses *ngIf="isAuthenticated"></app-courses>

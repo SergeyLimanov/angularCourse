@@ -37,22 +37,23 @@ export class CourseAddComponent implements OnInit {
      console.log('CourseAddComponent ngOnInit');
 
      this.coursesMenu = [
-      { label: 'Курсы' },
+       { icon: ' pi pi-home' }, // Добавление иконки домика
+       { label: 'Курсы' , routerLink: ['/courses']},
     ];
 
     console.log('ADD COURSE')
 
     const courseId = this.route.snapshot.paramMap.get('id');
-    console.log('Course ID from route:', courseId);
 
     if (courseId) {
       const course = this.coursesService.getCourseById(Number(courseId));
-      console.log('Course fetched by ID:', course);
       if (course) {
         this.newCourse = { ...course };
         this.description = this.newCourse.description;
         this.duration = this.newCourse.duration;
         this.creationDate = this.newCourse.creationDate;
+        this.coursesMenu.push({ label: this.newCourse.title });
+
       }
     }
   }
@@ -60,17 +61,15 @@ export class CourseAddComponent implements OnInit {
   // Логика сохранения курса
   save(): void {
     if (this.newCourse.id) {
-      // Обновление существующего курса
       this.coursesService.update(this.newCourse);
     } else {
-      // Добавление нового курса
       this.coursesService.create(this.newCourse);
     }
-    // this.router.navigateByUrl("/courses");
+    this.router.navigateByUrl("/courses");
   }
 
   cancel(): void {
     this.formClosed.emit(); // Закрытие формы без сохранения
-    // this.router.navigate(['/courses']); // Перенаправление на страницу курсов
+    this.router.navigate(['/courses']); // Перенаправление на страницу курсов
   }
 }

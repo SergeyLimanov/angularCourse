@@ -19,11 +19,16 @@
     </div>
     <div class="flex flex-column card-container m-2 col-6">
       <div>Продолжительность*</div>
-      <app-duration [duration]="newCourse.duration"> </app-duration>
+      <app-duration style="width: 54rem;" [(duration)]="newCourse.duration"> </app-duration>
     </div>
     <div class="flex flex-column card-container m-2 col-6">
       <div>Дата*</div>
-      <p-calendar [(ngModel)]="newCourse.creationDate" [showIcon]="true"></p-calendar>
+      <p-calendar
+        qCalendarMask
+        dateFormat="dd.mm.yy"
+        [(ngModel)]="newCourse.creationDate"
+        [showIcon]="true">
+      </p-calendar>
     </div>
     <div class="flex flex-column card-container m-2 col-6">
       <div>Авторы*</div>

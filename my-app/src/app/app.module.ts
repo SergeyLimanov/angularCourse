@@ -14,6 +14,7 @@ import {CalendarModule} from "primeng/calendar";
 import {ButtonModule} from "primeng/button";
 import {InputTextModule} from "primeng/inputtext";
 import {FormsModule} from "@angular/forms";
+import {CoursesRoutingModule} from "./modules/courses/courses-routing.module";
 
 registerLocaleData(localeRu);
 
@@ -37,12 +38,12 @@ registerLocaleData(localeRu);
     InputNumberModule,
     InputTextareaModule,
     AppRoutingModule,
-
+  CoursesRoutingModule,
   ],
   providers: [
     provideClientHydration()
   ],
-  bootstrap: [AppComponent]  // Указываем корневой компонент
+  bootstrap: [AppComponent]
 
 })
 export class AppModule { }

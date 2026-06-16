@@ -17,8 +17,8 @@ import { CourseAddComponent } from './components/course-add/course-add.component
 import {CalendarModule} from "primeng/calendar";
 import {InputNumberModule} from "primeng/inputnumber";
 import {InputTextareaModule} from "primeng/inputtextarea";
-import {AuthorComponent} from "./components/course-add/components/author/author.component";
-import {CourseDurationComponent} from "./components/course-add/components/course-duration/course-duration.component";
+import {AuthorComponent} from "./components/course-add/author/author.component";
+import {CourseDurationComponent} from "./components/course-add/course-duration/course-duration.component";
 import {CourseBorderDirective} from "../../shared/directive/course-border.directive";
 import {DialogModule} from "primeng/dialog";
 import {CoursesRoutingModule} from "./courses-routing.module";

@@ -66,11 +66,11 @@ export class CourseAddComponent implements OnInit {
       // Добавление нового курса
       this.coursesService.create(this.newCourse);
     }
-    this.router.navigateByUrl("/courses");
+    // this.router.navigateByUrl("/courses");
   }
 
   cancel(): void {
     this.formClosed.emit(); // Закрытие формы без сохранения
-    this.router.navigate(['/courses']); // Перенаправление на страницу курсов
+    // this.router.navigate(['/courses']); // Перенаправление на страницу курсов
   }
 }

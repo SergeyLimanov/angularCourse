@@ -5,6 +5,6 @@
     (logoutEvent)="logout()"
   ></app-header>
   <login-page class="flex justify-content-center" *ngIf="!isAuthenticated" (loginEvent)="login($event)"></login-page>
-  <app-courses *ngIf="isAuthenticated"></app-courses>
+  <router-outlet *ngIf="isAuthenticated"></router-outlet>
   <app-footer></app-footer>
 </div>

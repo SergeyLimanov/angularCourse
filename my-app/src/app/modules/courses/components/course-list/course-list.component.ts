@@ -25,6 +25,7 @@ export class CourseListComponent implements OnInit {
 
 //Вызывается после инициализации компонента.
   public ngOnInit(): void {
+
     this.items = [
       { icon: 'pi pi-home' }, // Добавление иконки домика
       { label: 'Курсы' }

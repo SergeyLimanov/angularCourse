@@ -1,10 +1,10 @@
-import {
-   ChangeDetectionStrategy, ChangeDetectorRef,
-  Component, OnInit,
-} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit,Output} from '@angular/core';
 import { ConfirmationService, MenuItem } from "primeng/api";
 import {Course} from "../../../../interface/course.interface";
 import {CoursesService} from "../../../../services/courses.service";
+import {Router} from "@angular/router";
+import {log} from "node:util";
+import {async} from "rxjs";
 
 @Component({
   selector: 'app-course-list',
@@ -17,16 +17,15 @@ export class CourseListComponent implements OnInit {
   searchField: string = "";
   filterCourses: Course[] =[];
   items: MenuItem[] = [];
-  public isAddingCourse: boolean = false; // Флаг для управления отображением формы
-  courseToEdit: Course | null = null; // Данные курса для редактирования
-
 
   constructor(private cdr: ChangeDetectorRef,
               private coursesService: CoursesService,
-              private confirmationService: ConfirmationService) { }
+              private confirmationService: ConfirmationService,
+              private router: Router) { }
 
 //Вызывается после инициализации компонента.
   public ngOnInit(): void {
+
     this.items = [
       { icon: 'pi pi-home' }, // Добавление иконки домика
       { label: 'Курсы' }
@@ -44,30 +43,23 @@ export class CourseListComponent implements OnInit {
     );
   }
 
+
   public openAddCourseForm(): void {
-    console.log('Открыть форму добавления курса');
-    this.isAddingCourse = true;
-    console.log('isAddingCourse:', this.isAddingCourse);
+    console.log('press ADD')
+    this.router.navigate(['/courses/new']);
   }
 
-  public closeAddCourseForm(): void {
-    console.log('Закрыть форму добавления курса');
-    this.isAddingCourse = false;
-    console.log('isAddingCourse:', this.isAddingCourse);
+  public openEditCourseForm(course: Course): void {
+    this.router.navigate([`/courses/${course.id}`]);
   }
 
-  openEditCourseForm(course: Course): void {
-    this.isAddingCourse = true; // Показываем форму редактирования курса
-    this.courseToEdit = course; // Передаем данные курса для редактирования
-  }
   public selectCourse(course: Course): void {
-    console.log('Открыть форму редактирования курса')
     this.openEditCourseForm(course); // Открываем форму редактирования
   }
 
   public deleteCourse(course: Course): void {
     this.confirmationService.confirm({
-      message: `Вы действительно хотите удалить этот курс ${course.title}?`,
+      message: `Вы уверены, что хотите удалить курс ${course.title}?`,
       header: 'Удалить курс?',
       acceptLabel: 'Удалить',
       rejectLabel: 'Отмена',
@@ -105,5 +97,7 @@ export class CourseListComponent implements OnInit {
   public loadMore(): void {
     console.log("load more");
   }
+
+  protected readonly Output = Output;
 
 }

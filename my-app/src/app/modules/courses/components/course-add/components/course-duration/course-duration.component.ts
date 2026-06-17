@@ -6,13 +6,12 @@ import {Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output}
   styleUrls: ['./course-duration.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CourseDurationComponent implements OnInit {
+export class CourseDurationComponent  {
   @Input() duration: number = 0;
   @Output() durationChange = new EventEmitter<number>();
 
   constructor() { }
 
-  ngOnInit(): void {}
   onDurationChange(value: number): void {
     this.durationChange.emit(value);
   }

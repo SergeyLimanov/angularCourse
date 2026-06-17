@@ -9,31 +9,41 @@ export class AuthService {
 
   constructor() {}
 
-  public login(login: string, password: string): void {
-    const fakeUserInfo = {
-      login,
-      password,
-      token: "token"  // Обычно это реальный токен
-    };
+  private isBrowser(): boolean {
+    return typeof window !== 'undefined';
+  }
 
-    // Сохраняем объект в localStorage
-    localStorage.setItem(this.USER_INFO_KEY, JSON.stringify(fakeUserInfo));
+  public login(login: string, password: string): void {
+    if (this.isBrowser()) {
+      const fakeUserInfo = {
+        login,
+        password,
+        token: "token"  // Обычно это реальный токен
+      };
+      localStorage.setItem(this.USER_INFO_KEY, JSON.stringify(fakeUserInfo));
+    }
   }
 
   public logout(): void {
-    // Удаляем информацию о пользователе
-    localStorage.removeItem(this.USER_INFO_KEY);
+    if (this.isBrowser()) {
+      localStorage.removeItem(this.USER_INFO_KEY);
+      console.log(localStorage)
+    }
   }
 
   public isAuthenticated(): boolean {
-    // Проверяем наличие данных о пользователе в localStorage
-    const userInfo = localStorage.getItem(this.USER_INFO_KEY);
-    return !!userInfo;
+    if (this.isBrowser()) {
+      const userInfo = localStorage.getItem(this.USER_INFO_KEY);
+      return !!userInfo;
+    }
+    return false;
   }
 
   public getUserInfo(): string | null {
-    // Извлекаем информацию о пользователе
-    const userInfo = localStorage.getItem(this.USER_INFO_KEY);
-    return userInfo ? JSON.parse(userInfo).login : null;
+    if (this.isBrowser()) {
+      const userInfo = localStorage.getItem(this.USER_INFO_KEY);
+      return userInfo ? JSON.parse(userInfo).login : null;
+    }
+    return null;
   }
 }

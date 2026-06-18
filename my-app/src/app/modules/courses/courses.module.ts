@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import {CommonModule, NgOptimizedImage} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {CourseListComponent} from "./components/course-list/course-list.component";
 import {CourseItemComponent} from "./components/course-item/course-item.component";
 import { CardModule } from 'primeng/card';
@@ -22,7 +22,7 @@ import {CourseDurationComponent} from "./components/course-add/components/course
 import {CourseBorderDirective} from "../../shared/directive/course-border.directive";
 import {DialogModule} from "primeng/dialog";
 import {CoursesRoutingModule} from "./courses-routing.module";
-import {StyleClassModule} from "primeng/styleclass";
+import {ProgressSpinnerModule} from "primeng/progressspinner";
 
 @NgModule({
   declarations: [
@@ -37,22 +37,21 @@ import {StyleClassModule} from "primeng/styleclass";
     AuthorComponent,
     CourseBorderDirective
   ],
-  imports: [
-    CommonModule,
-    CardModule,
-    ButtonModule,
-    InputTextModule,
-    FormsModule,
-    ConfirmDialogModule,
-    BreadcrumbModule,
-    InputTextareaModule,
-    InputNumberModule,
-    CalendarModule,
-    DialogModule,
-    StyleClassModule,
-    NgOptimizedImage,
-    CoursesRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        CardModule,
+        ButtonModule,
+        InputTextModule,
+        FormsModule,
+        ConfirmDialogModule,
+        BreadcrumbModule,
+        InputTextareaModule,
+        InputNumberModule,
+        CalendarModule,
+        DialogModule,
+        CoursesRoutingModule,
+        ProgressSpinnerModule
+    ],
   providers: [
     ConfirmationService,
   ],

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -18,22 +20,49 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.isAuthenticated = this.authService.isAuthenticated();
-    this.currentUser = this.authService.getUserInfo() || '';
+    this.checkAuthentication();
   }
 
-  login(event: any) {
-    this.authService.login(event.login, event.password);
-    this.isAuthenticated = this.authService.isAuthenticated();
-    this.currentUser = this.authService.getUserInfo() || '';
-    if (this.isAuthenticated) {
-      this.router.navigate(['/courses']);
-    }
+  private checkAuthentication(): void {
+    this.authService.currentUser.pipe(
+      switchMap((user) => {
+        if (user) {
+          this.isAuthenticated = true;
+          this.currentUser = user;
+          return of(user); // Возвращаем текущего пользователя для использования в `subscribe`
+        } else {
+          this.isAuthenticated = false;
+          this.currentUser = '';
+          return of(null);
+        }
+      }),
+      switchMap(() => this.authService.getUserInfo()), // Получаем дополнительную информацию о пользователе, если нужно
+      catchError((error) => {
+        console.error('Ошибка при проверке аутентификации:', error);
+        return of(null);
+      })
+    ).subscribe();
   }
 
-  logout() {
+  login(event: any): void {
+    this.authService.login(event.login, event.password).pipe(
+      switchMap(() => this.authService.currentUser), // Обновляем текущего пользователя после успешного входа
+      catchError((error) => {
+        console.error('Ошибка при входе:', error);
+        return of(null);
+      })
+    ).subscribe(user => {
+      if (user) {
+        this.isAuthenticated = true;
+        this.currentUser = user;
+        this.router.navigate(['/courses']);
+      }
+    });
+  }
+
+  logout(): void {
     this.authService.logout();
-    this.isAuthenticated = this.authService.isAuthenticated();
+    this.isAuthenticated = false;
     this.currentUser = '';
     this.router.navigate(['/login']);
   }

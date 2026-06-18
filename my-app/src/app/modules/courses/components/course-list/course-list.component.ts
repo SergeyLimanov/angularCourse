@@ -1,92 +1,111 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit,Output} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ConfirmationService, MenuItem } from "primeng/api";
-import {Course} from "../../../../interface/course.interface";
-import {CoursesService} from "../../../../services/courses.service";
-import {Router} from "@angular/router";
-import {log} from "node:util";
-import {async} from "rxjs";
+import { Course } from "../../../../interface/course.interface";
+import { CoursesService } from "../../../../services/courses.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-course-list',
   templateUrl: './course-list.component.html',
-  styleUrl: './course-list.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default // По умолчанию для «умного» компонента
+  styleUrls: ['./course-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush //Переделала для оптимизации
 })
 export class CourseListComponent implements OnInit {
   public courses: Course[] = [];
-  searchField: string = "";
-  filterCourses: Course[] =[];
-  items: MenuItem[] = [];
+  public filterCourses: Course[] = [];
+  public searchField: string = "";
+  public items: MenuItem[] = [];
+  private start: number = 0;
+  private count: number = 5;
+  private totalCourses: number = 0; // Общее количество курсов
+  public hasMoreCourses: boolean = true; // Для проверки наличия дополнительных курсов
 
-  constructor(private cdr: ChangeDetectorRef,
-              private coursesService: CoursesService,
-              private confirmationService: ConfirmationService,
-              private router: Router) { }
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private coursesService: CoursesService,
+    private confirmationService: ConfirmationService,
+    private router: Router
+  ) { }
 
-//Вызывается после инициализации компонента.
-  public ngOnInit(): void {
-
+  ngOnInit(): void {
     this.items = [
-      { icon: 'pi pi-home' }, // Добавление иконки домика
+      { icon: 'pi pi-home' },
       { label: 'Курсы' }
     ];
-    // Загрузка курсов
-    this.coursesService.getCourses().subscribe(
-      data => {
-        this.courses = data;
-        this.filterCourses = this.courses;
-        this.cdr.markForCheck();
-      },
-      error => {
-        console.error('Error fetching courses', error);
+
+    this.loadCourses();
+  }
+
+  loadCourses(): void {
+    console.log('Начало загрузки курсов с start:', this.start);
+
+    this.coursesService.getCourses(this.start, this.count).subscribe(data => {
+      console.log('Загружено курсов:', data.length);
+
+      if (data.length < this.count) {
+        this.hasMoreCourses = false;
       }
-    );
+
+      // Проверяем, какие курсы уже загружены, чтобы избежать дублирования
+      const newCourses = data.filter(course =>
+        !this.courses.some(existingCourse => existingCourse.id === course.id)
+      );
+
+      // Добавляем новые курсы в конец списка
+      this.courses = [...this.courses, ...newCourses];
+      this.filterCourses = this.courses;
+
+      // Увеличиваем индекс для следующей загрузки
+      this.start += this.count;
+
+      console.log('Обновленный список курсов:', this.courses);
+      this.cdr.markForCheck();
+    }, error => {
+      console.error('Error fetching courses', error);
+    });
   }
 
 
-  public openAddCourseForm(): void {
-    console.log('press ADD')
+  openAddCourseForm(): void {
     this.router.navigate(['/courses/new']);
   }
 
-  public openEditCourseForm(course: Course): void {
+  openEditCourseForm(course: Course): void {
     this.router.navigate([`/courses/${course.id}`]);
   }
 
-  public selectCourse(course: Course): void {
-    this.openEditCourseForm(course); // Открываем форму редактирования
+  selectCourse(course: Course): void {
+    this.openEditCourseForm(course);
   }
 
-  public deleteCourse(course: Course): void {
+  deleteCourse(course: Course): void {
     this.confirmationService.confirm({
       message: `Вы уверены, что хотите удалить курс ${course.title}?`,
       header: 'Удалить курс?',
       acceptLabel: 'Удалить',
       rejectLabel: 'Отмена',
       accept: () => {
-        this.coursesService.remove(course.id);
-        // Локальное удаление курса
-        this.courses = this.courses.filter(c => c.id !== course.id);
-        this.filterCourses = this.courses.filter(course =>
-          course.title.toLowerCase().includes(this.searchField.toLowerCase())
-        );
-        this.cdr.detectChanges();
+        this.coursesService.remove(course.id).subscribe(() => {
+          this.courses = this.courses.filter(c => c.id !== course.id);
+          this.filterCourses = this.courses.filter(course =>
+            course.title.toLowerCase().includes(this.searchField.toLowerCase())
+          );
+          this.cdr.detectChanges();
+        });
       },
-      reject: () => {},
+      reject: () => { },
     });
   }
 
-  public searchClick(): void {
-    console.log(this.searchField);
-    // Применяем фильтр по названию курса
+  searchClick(): void {
     this.filterCourses = this.courses.filter(course =>
       course.title.toLowerCase().includes(this.searchField.toLowerCase())
     );
   }
 
-  public clearFilter(): void {
+  clearFilter(): void {
     this.searchField = "";
-    this.filterCourses = this.courses;
+    this.filterCourses = [...this.courses]; // Обновляем фильтрованные курсы с последними данными
     this.cdr.detectChanges();
   }
 
@@ -94,10 +113,9 @@ export class CourseListComponent implements OnInit {
     return course.id;
   }
 
-  public loadMore(): void {
-    console.log("load more");
+  loadMore(): void {
+    if (this.hasMoreCourses) {
+      this.loadCourses();
+    }
   }
-
-  protected readonly Output = Output;
-
 }

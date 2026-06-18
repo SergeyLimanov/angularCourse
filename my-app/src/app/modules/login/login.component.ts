@@ -15,24 +15,24 @@ export class LoginComponent {
   password: string = '';
   authenticated: boolean = false;
 
-
   constructor(private authService: AuthService, private router: Router) {}
 
-  public async loginAuth() {
-    try {
-      await this.authService.login(this.login, this.password);
+  public loginAuth() {
+    this.authService.login(this.login, this.password).subscribe(
+      (user) => {
+        this.authenticated = this.authService.isAuthenticated();
 
-      this.authenticated = this.authService.isAuthenticated();
-
-      if (this.authenticated) {
-        this.loginEvent.emit({ login: this.login, password: this.password });
-        await this.router.navigate(['/courses']);
-      } else {
-        console.log('Ошибка аутентификации');
+        if (this.authenticated) {
+          this.loginEvent.emit({ login: this.login, password: this.password });
+          this.router.navigate(['/courses']);
+        } else {
+          console.log('Ошибка аутентификации');
+        }
+      },
+      (error) => {
+        console.error('Произошла ошибка при аутентификации:', error);
       }
-    } catch (error) {
-      console.error('Произошла ошибка при аутентификации:', error);
-    }
+    );
   }
 
   public resetPassword() {

@@ -1,0 +1,150 @@
+{
+  "courses": [
+    {
+      "id": "1",
+      "title": "Java Programming Masterclass",
+      "creationDate": "2023-01-26T19:22:57.000Z",
+      "duration": 90,
+      "description": "This masterclass covers advanced Java programming concepts including multi-threading, design patterns, and database connectivity. Participants will gain hands-on experience in building complex Java applications.",
+      "topRated": false
+    },
+    {
+      "id": "2",
+      "title": "Python for Data Science",
+      "creationDate": "2023-03-10T19:22:57.000Z",
+      "duration": 60,
+      "description": "Learn Python programming language with a focus on its applications in data science. The courses covers data analysis, machine learning, and data visualization using popular Python libraries such as NumPy, Pandas, and Matplotlib.",
+      "topRated": false
+    },
+    {
+      "id": "3",
+      "title": "Web Development Bootcamp",
+      "creationDate": "2023-02-05T19:22:57.000Z",
+      "duration": 120,
+      "description": "Join this intensive bootcamp to learn modern web development technologies including HTML, CSS, JavaScript and Node.js. By the end of the courses, you'll be able to build dynamic and interactive web applications.",
+      "topRated": true
+    },
+    {
+      "id": "4",
+      "title": "Machine Learning Fundamentals",
+      "creationDate": "2023-04-20T19:22:57.000Z",
+      "duration": 120,
+      "description": "Explore the basics of machine learning algorithms and techniques in this courses. Topics include supervised and unsupervised learning, regression, classification, and clustering. Practical exercises and projects are included.",
+      "topRated": true
+    },
+    {
+      "id": "5",
+      "title": "iOS App Development with Swift",
+      "creationDate": "2024-06-27T21:00:00.000Z",
+      "duration": "103",
+      "description": "Explore the basics of iOS app development using Swift. Topics include user interface design, data management, and integration with Apple services. Build your own iOS apps with practical projects.",
+      "topRated": true
+    },
+    {
+      "id": "6",
+      "title": "Introduction to Cloud Computing",
+      "creationDate": "2023-09-30T00:00:00.000Z",
+      "duration": 45,
+      "description": "Dive into the fundamentals of cloud computing, including services, deployment models, and cloud architecture. This course will give you a solid understanding of how cloud computing can transform your IT infrastructure.",
+      "topRated": true
+    },
+    {
+      "id": "7",
+      "title": "Advanced SQL Queries",
+      "creationDate": "2023-01-30T00:00:00.000Z",
+      "duration": 50,
+      "description": "Master advanced SQL techniques for querying and manipulating databases. This course covers complex joins, subqueries, and optimization strategies to enhance your database skills.",
+      "topRated": false
+    },
+    {
+      "id": "8",
+      "title": "JavaScript Frameworks Overview",
+      "creationDate": "2023-02-03T00:00:00.000Z",
+      "duration": 55,
+      "description": "Get an overview of popular JavaScript frameworks like React, Angular, and Vue.js. Learn about their unique features, strengths, and how to choose the right framework for your projects.",
+      "topRated": false
+    },
+    {
+      "id": "9",
+      "title": "Introduction to Cybersecurity",
+      "creationDate": "2023-01-10T21:00:00.000Z",
+      "duration": 60,
+      "description": "Explore the key principles of cybersecurity, including threat detection, risk management, and protective measures. This course provides a foundational understanding of securing information systems.",
+      "topRated": true
+    },
+    {
+      "id": "10",
+      "title": "Building RESTful APIs with Node.js",
+      "creationDate": "2024-02-06T00:00:00.000Z",
+      "duration": 65,
+      "description": "Learn how to build robust and scalable RESTful APIs using Node.js. This course covers API design, implementation, and best practices for creating high-performance web services.",
+      "topRated": true
+    },
+    {
+      "id": "11",
+      "title": "Data Visualization with D3.js",
+      "creationDate": "2023-03-09T00:00:00.000Z",
+      "duration": 70,
+      "description": "Discover the power of D3.js for creating dynamic and interactive data visualizations. This course covers everything from basic charts to complex visual representations using D3.js.",
+      "topRated": false
+    },
+    {
+      "id": "12",
+      "title": "Introduction to JavaScript",
+      "description": "This course provides an overview of JavaScript programming language.",
+      "duration": "300",
+      "creationDate": "2024-08-30T23:27:43.422Z",
+      "topRated": false
+    },
+    {
+      "id": 13,
+      "title": "31",
+      "description": "31",
+      "duration": "13",
+      "creationDate": "2026-06-19T07:10:07.644Z",
+      "topRated": false
+    },
+    {
+      "id": 14,
+      "title": "222",
+      "description": "22222",
+      "duration": "2222",
+      "creationDate": "2026-06-19T07:10:16.143Z",
+      "topRated": false
+    },
+    {
+      "id": 15,
+      "title": "44",
+      "description": "444",
+      "duration": "44",
+      "creationDate": "2026-06-19T07:11:08.624Z",
+      "topRated": false
+    },
+    {
+      "id": 16,
+      "title": "adaw",
+      "description": "adad",
+      "duration": "3",
+      "creationDate": "2026-06-19T07:14:00.175Z",
+      "topRated": false
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "token": "80cda4677945b293ee608b0552c7f472",
+      "firstName": "Sergey",
+      "lastName": "Limanov",
+      "email": "slimanov",
+      "password": "12345678"
+    },
+    {
+      "id": "2",
+      "token": "72c391197f05534b3577c22c6ecdcf3f",
+      "firstName": "test",
+      "lastName": "test",
+      "email": "test",
+      "password": "test"
+    }
+  ]
+}

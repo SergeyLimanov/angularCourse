@@ -1,8 +1,9 @@
 <div class="card py-2">
   <p-breadcrumb [model]="coursesMenu" ></p-breadcrumb>
+
 </div>
 
-<p-card [header]="courseToEdit ? 'Редактировать курс' : 'Добавить курс'">
+<p-card [header]="isEditing ? 'Редактировать курс' : 'Добавить курс'">
   <div class="grid p-fluid ">
     <div class="flex flex-column card-container m-2 col-6">
       <div>Наименование*</div>

@@ -1,49 +1,90 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, Observable, of, throwError } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { map, catchError } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthService {
+  private currentUserSubject = new BehaviorSubject<string | null>(
+    this.isBrowser() ? localStorage.getItem('currentUser') : null
+  );
+  private usersUrl = "/api/users";
+  private coursesUrl = "/api/courses";
 
-  private readonly USER_INFO_KEY = 'userInfo';
 
-  constructor() {}
+  public currentUser: Observable<string | null> = this.currentUserSubject.asObservable();
 
-  private isBrowser(): boolean {
-    return typeof window !== 'undefined';
+  constructor(private http: HttpClient) {}
+
+  // Метод для получения текущего токена из localStorage
+  public getToken(): string | null {
+    return this.isBrowser() ? localStorage.getItem('authToken') : null;
   }
 
-  public login(login: string, password: string): void {
+  // Метод для установки токена после аутентификации
+  public setToken(token: string): void {
     if (this.isBrowser()) {
-      const fakeUserInfo = {
-        login,
-        password,
-        token: "token"  // Обычно это реальный токен
-      };
-      localStorage.setItem(this.USER_INFO_KEY, JSON.stringify(fakeUserInfo));
+      localStorage.setItem('authToken', token);
     }
+  }
+
+  public login(email: string, password: string): Observable<any> {
+    return this.http.get<any[]>(this.usersUrl).pipe(
+      map((users) => {
+        const user = users.find(
+          (user) => user.email === email && user.password === password
+        );
+        if (user) {
+          this.currentUserSubject.next(user.email);
+          localStorage.setItem("currentUser", user.email);
+          this.setToken(user.token);  // Устанавливаем токен
+          return user;
+        } else {
+          throw new Error("Неверный логин или пароль");
+        }
+      }),
+      catchError((error) => {
+        console.error("Ошибка при входе:", error);
+        return throwError(error);
+      })
+    );
   }
 
   public logout(): void {
-    if (this.isBrowser()) {
-      localStorage.removeItem(this.USER_INFO_KEY);
-      console.log(localStorage)
-    }
+    console.log("Выход " + this.currentUserSubject.value);
+    this.currentUserSubject.next(null);
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("authToken");
   }
 
   public isAuthenticated(): boolean {
-    if (this.isBrowser()) {
-      const userInfo = localStorage.getItem(this.USER_INFO_KEY);
-      return !!userInfo;
-    }
-    return false;
+    return this.getToken() !== null;
   }
 
-  public getUserInfo(): string | null {
-    if (this.isBrowser()) {
-      const userInfo = localStorage.getItem(this.USER_INFO_KEY);
-      return userInfo ? JSON.parse(userInfo).login : null;
+  public getCurrentUser(): string | null {
+    return this.currentUserSubject.value;
+  }
+
+  public getUserInfo(): Observable<any> {
+    const token = this.getToken();
+    if (!token) {
+      return of(null); // Возвращаем пустое значение, если токен отсутствует
     }
-    return null;
+    return this.http.get<any[]>(this.usersUrl).pipe(
+      map((users) => {
+        const user = users.find((user) => user.token === token);
+        return user ? { email: user.email, firstName: user.firstName, lastName: user.lastName } : null;
+      }),
+      catchError((error) => {
+        console.error("Ошибка при получении информации о пользователе:", error);
+        return of(null);
+      })
+    );
+  }
+
+  private isBrowser() {
+    return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
   }
 }

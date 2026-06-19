@@ -15,8 +15,11 @@ import {ButtonModule} from "primeng/button";
 import {InputTextModule} from "primeng/inputtext";
 import {FormsModule} from "@angular/forms";
 import {CoursesRoutingModule} from "./modules/courses/courses-routing.module";
+import {HttpClientModule, provideHttpClient, withFetch, withInterceptors} from "@angular/common/http";
+import {authInterceptor} from "./services/auth/auth.interceptor";
 
 registerLocaleData(localeRu);
+
 
 
 @NgModule({
@@ -38,10 +41,14 @@ registerLocaleData(localeRu);
     InputNumberModule,
     InputTextareaModule,
     AppRoutingModule,
-  CoursesRoutingModule,
+    CoursesRoutingModule,
+    HttpClientModule,
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    provideHttpClient(
+      withInterceptors([authInterceptor]),
+      withFetch())
   ],
   bootstrap: [AppComponent]
 

@@ -3,10 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "concurrently --kill-others \"npm run server\" \"npm run start:proxy\"",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "start:proxy": "ng serve --proxy-config proxy.conf.json",
+    "server": "json-server --watch db.json",
     "serve:ssr:study-angular": "node dist/study-angular/server/server.mjs",
     "lint": "ng lint"
   },
@@ -22,7 +24,9 @@
     "@angular/platform-server": "^17.1.0",
     "@angular/router": "^17.1.0",
     "@angular/ssr": "^17.1.1",
+    "concurrently": "^8.2.2",
     "express": "^4.18.2",
+    "json-server": "^1.0.0-beta.2",
     "primeflex": "^3.3.1",
     "primeicons": "^6.0.1",
     "primeng": "^17.4.0",

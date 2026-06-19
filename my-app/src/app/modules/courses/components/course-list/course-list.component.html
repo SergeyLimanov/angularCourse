@@ -39,10 +39,11 @@
 </div>
 <div class="w-12 flex justify-content-center" *ngIf="hasMoreCourses && filterCourses.length > 0">
   <button pButton class="loadMore p-button-lg flex align-items-center justify-content-center"
-          [disabled]="!hasMoreCourses"
+          [disabled]="isLoading || !hasMoreCourses"
           (click)="loadMore()">  Загрузка курсов
   </button>
 </div>
 
 
 <p-confirmDialog></p-confirmDialog>
+<p-progressSpinner *ngIf="isLoading" styleClass="custom-spinner"></p-progressSpinner>

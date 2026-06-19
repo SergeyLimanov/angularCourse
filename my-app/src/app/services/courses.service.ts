@@ -12,8 +12,9 @@ export class CoursesService {
 
   constructor(private http: HttpClient) {}
 
-  getCourses(start: number, count: number): Observable<Course[]> {
-    return this.http.get<Course[]>(this.apiUrl + `/courses?_start=${start}&_limit=${count}`)
+  // Метод для получения всех курсов
+  getAllCourses(): Observable<Course[]> {
+    return this.http.get<Course[]>(`${this.apiUrl}/courses`)
       .pipe(
         catchError(error => {
           console.error('Error fetching courses', error);
@@ -22,19 +23,36 @@ export class CoursesService {
       );
   }
 
-  getCourseById(id: number): Observable<Course> {
-    return this.http.get<Course>(`${this.apiUrl}/${id}`);
+  // Метод для получения курсов с параметрами поиска
+  getCourses(start: number, count: number, searchTerm?: string): Observable<Course[]> {
+    let url = `${this.apiUrl}/courses?_start=${start}&_limit=${count}`;
+    if (searchTerm) {
+      url += `&q=${searchTerm}`; // Параметр поиска
+    }
+    return this.http.get<Course[]>(url)
+      .pipe(
+        catchError(error => {
+          console.error('Error fetching courses', error);
+          return throwError(() => new Error('Error fetching courses'));
+        })
+      );
   }
-
+  // Создание нового курса
   create(course: Course): Observable<Course> {
-    return this.http.post<Course>(this.apiUrl, course);
+    return this.http.post<Course>(`${this.apiUrl}/courses`, course);
   }
 
+  // Обновление существующего курса
   update(course: Course): Observable<Course> {
-    return this.http.put<Course>(`${this.apiUrl}/${course.id}`, course);
+    return this.http.put<Course>(`${this.apiUrl}/courses/${course.id}`, course);
+  }
+
+  // Получение курса по ID
+  getCourseById(id: number): Observable<Course> {
+    return this.http.get<Course>(`${this.apiUrl}/courses/${id}`);
   }
 
   remove(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/courses/${id}`);
   }
 }

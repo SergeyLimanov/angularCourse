@@ -39,13 +39,12 @@ export class CourseListComponent implements OnInit {
   loadCourses(): void {
     console.log('Начало загрузки курсов с start:', this.start);
 
-    this.coursesService.getCourses(this.start, this.count).subscribe(data => {
+    this.coursesService.getCourses(this.start, this.count, this.searchField).subscribe(data => {
       console.log('Загружено курсов:', data.length);
 
       if (data.length < this.count) {
         this.hasMoreCourses = false;
       }
-
       // Проверяем, какие курсы уже загружены, чтобы избежать дублирования
       const newCourses = data.filter(course =>
         !this.courses.some(existingCourse => existingCourse.id === course.id)
@@ -53,7 +52,10 @@ export class CourseListComponent implements OnInit {
 
       // Добавляем новые курсы в конец списка
       this.courses = [...this.courses, ...newCourses];
-      this.filterCourses = this.courses;
+      this.filterCourses = this.courses.filter(course =>
+        course.title.toLowerCase().includes(this.searchField.toLowerCase()) ||
+        course.description.toLowerCase().includes(this.searchField.toLowerCase())
+      );
 
       // Увеличиваем индекс для следующей загрузки
       this.start += this.count;
@@ -98,14 +100,16 @@ export class CourseListComponent implements OnInit {
   }
 
   searchClick(): void {
-    this.filterCourses = this.courses.filter(course =>
-      course.title.toLowerCase().includes(this.searchField.toLowerCase())
-    );
+    this.start = 0; // Сброс start при новом поиске
+    this.courses = []; // Очищаем текущий список курсов
+    this.loadCourses(); // Загружаем курсы с учетом нового поискового запроса
   }
 
   clearFilter(): void {
     this.searchField = "";
-    this.filterCourses = [...this.courses]; // Обновляем фильтрованные курсы с последними данными
+    this.start = 0; // Сброс start
+    this.courses = []; // Очищаем текущий список курсов
+    this.loadCourses(); // Загружаем курсы без фильтра
     this.cdr.detectChanges();
   }
 

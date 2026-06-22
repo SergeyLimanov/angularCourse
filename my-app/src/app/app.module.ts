@@ -17,14 +17,13 @@ import {FormsModule} from "@angular/forms";
 import {CoursesRoutingModule} from "./modules/courses/courses-routing.module";
 import {HttpClientModule, provideHttpClient, withFetch, withInterceptors} from "@angular/common/http";
 import {authInterceptor} from "./services/auth/auth.interceptor";
+import { GlobalSpinnerComponent } from './shared/global-spinner/global-spinner.component';
 
 registerLocaleData(localeRu);
 
-
-
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

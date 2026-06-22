@@ -74,6 +74,7 @@ export class AuthService {
     }
     return this.http.get<User[]>(this.usersUrl).pipe(
       map(users => {
+        console.log('Users from API:', users); // Логирование данных от API
         const user = users.find(u => u.token === token);
         return user || null;
       }),
@@ -83,6 +84,7 @@ export class AuthService {
       })
     );
   }
+
 
 // Проверяем наличие доступа к window и localStorage
   private isBrowser(): boolean {

@@ -1,16 +1,22 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { SpinnerService } from '../spinner.service'; //  для спиннера
+import { finalize } from 'rxjs/operators';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const authService = inject(AuthService);
-  const authToken = authService.getToken();
+  const spinnerService = inject(SpinnerService);
 
-  console.log('Auth Token:', authToken);
+  spinnerService.show();
 
-  // Если токен существует, добавляем его в заголовок
-  const authReq = authToken ? req.clone({setHeaders: {Authorization: `Bearer ${authToken}`}}) : req;
-  console.log('Request Headers:', authReq.headers);
+  const authToken = localStorage.getItem('authToken');
 
-  return next(authReq);
+  const authReq = authToken ? req.clone({
+    setHeaders: { Authorization: `Bearer ${authToken}` }
+  }) : req;
+
+  return next(authReq).pipe(
+    finalize(() => {
+      spinnerService.hide();
+    })
+  );
 };

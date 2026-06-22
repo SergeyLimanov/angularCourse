@@ -5,6 +5,7 @@ import {LogoComponent} from './components/logo/logo.component';
 import {FooterComponent} from './components/footer/footer.component';
 import {ButtonModule} from "primeng/button";
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import {GlobalSpinnerComponent} from "./global-spinner/global-spinner.component";
 
 
 @NgModule({
@@ -12,12 +13,15 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     HeaderComponent,
     LogoComponent,
     FooterComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    GlobalSpinnerComponent
   ],
   exports: [
     HeaderComponent,
     LogoComponent,
-    FooterComponent
+    FooterComponent,
+    NotFoundComponent,
+    GlobalSpinnerComponent
   ],
   imports: [
     CommonModule,

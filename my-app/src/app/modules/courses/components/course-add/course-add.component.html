@@ -1,6 +1,5 @@
 <div class="card py-2">
   <p-breadcrumb [model]="coursesMenu" ></p-breadcrumb>
-
 </div>
 
 <p-card [header]="isEditing ? 'Редактировать курс' : 'Добавить курс'">
@@ -20,7 +19,7 @@
     </div>
     <div class="flex flex-column card-container m-2 col-6">
       <div>Продолжительность*</div>
-      <app-duration style="width: 54rem;" [(duration)]="newCourse.duration"> </app-duration>
+      <app-duration style="max-width: 60rem;" [(duration)]="newCourse.duration"> </app-duration>
     </div>
     <div class="flex flex-column card-container m-2 col-6">
       <div>Дата*</div>

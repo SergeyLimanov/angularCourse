@@ -6,6 +6,7 @@ import { Router } from "@angular/router";
 import {debounceTime, filter, Subject} from "rxjs";
 import {switchMap} from "rxjs/operators";
 
+
 @Component({
   selector: 'app-course-list',
   templateUrl: './course-list.component.html',
@@ -122,6 +123,8 @@ export class CourseListComponent implements OnInit {
             course.title.toLowerCase().includes(this.searchField.toLowerCase())
           );
           this.cdr.detectChanges();
+        }, error => {
+          console.error('Error deleting course', error);
         });
       },
       reject: () => { },

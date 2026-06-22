@@ -10,14 +10,14 @@ import {User} from "../../../interface/user.interface";
 export class HeaderComponent implements OnInit{
   @Output() public logoutEvent: EventEmitter<Event> = new EventEmitter<Event>();
   @Input() public isAuthenticated = false;
-  @Input() public currentUser = "";  // Объявление входного свойства
+  @Input() public currentUser: string = '';
   constructor(private readonly authService: AuthService) { }
 
   ngOnInit(): void {
     this.authService.getCurrentUser().subscribe((user: User | null) => {
       this.isAuthenticated = !!user;
       if (user) {
-        this.currentUser = `${user.firstName} ${user.lastName}`; // Формируем строку
+        this.currentUser = user ? `${user.firstName} ${user.lastName}` : ''; // Формируем строку
       } else {
         this.currentUser = '';
       }

@@ -57,8 +57,10 @@ export class AuthService {
     localStorage.removeItem("authToken");
   }
 
-  public isAuthenticated(): boolean {
-    return this.getToken() !== null;
+  // Метод для проверки аутентификации
+  public isAuthenticated(): Observable<boolean> {
+    const token = this.getToken();
+    return of(!!token); // Возвращаем Observable<boolean>
   }
 
   public getCurrentUser(): Observable<User | null> {

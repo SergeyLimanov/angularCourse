@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from "../../services/auth.service";
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'login-page',
@@ -13,21 +13,21 @@ export class LoginComponent {
 
   login: string = '';
   password: string = '';
-  authenticated: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   public loginAuth() {
     this.authService.login(this.login, this.password).subscribe(
       (user) => {
-        this.authenticated = this.authService.isAuthenticated();
-
-        if (this.authenticated) {
-          this.loginEvent.emit({ login: this.login, password: this.password });
-          this.router.navigate(['/courses']);
-        } else {
-          console.log('Ошибка аутентификации');
-        }
+        // Обрабатываем результат входа и проверяем аутентификацию
+        this.authService.isAuthenticated().subscribe(isAuthenticated => {
+          if (isAuthenticated) {
+            this.loginEvent.emit({ login: this.login, password: this.password });
+            this.router.navigate(['/courses']);
+          } else {
+            console.log('Ошибка аутентификации');
+          }
+        });
       },
       (error) => {
         console.error('Произошла ошибка при аутентификации:', error);

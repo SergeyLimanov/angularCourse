@@ -37,7 +37,7 @@ export class CourseListComponent implements OnInit {
     ];
     // Подписка на изменения в поле поиска
     this.searchSubject.pipe(
-      debounceTime(300), // Задержка для предотвращения частых запросов
+      debounceTime(250), // Задержка для предотвращения частых запросов
       filter(searchTerm => searchTerm.length >= 3 || searchTerm.length === 0), // Фильтрация ввода
       switchMap(searchTerm => {
         this.start = 0; // Сброс start при новом поиске

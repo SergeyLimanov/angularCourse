@@ -2,21 +2,20 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, of, throwError } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { map, catchError } from "rxjs/operators";
+import {User} from "../interface/user.interface";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
-  private currentUserSubject = new BehaviorSubject<string | null>(
-    this.isBrowser() ? localStorage.getItem('currentUser') : null
-  );
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
   private usersUrl = "/api/users";
   private coursesUrl = "/api/courses";
+  public currentUser: Observable<User | null> = this.currentUserSubject.asObservable();
 
-
-  public currentUser: Observable<string | null> = this.currentUserSubject.asObservable();
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.getUserInfo().subscribe(user => this.currentUserSubject.next(user));
+  }
 
   // Метод для получения текущего токена из localStorage
   public getToken(): string | null {
@@ -30,15 +29,14 @@ export class AuthService {
     }
   }
 
-  public login(email: string, password: string): Observable<any> {
-    return this.http.get<any[]>(this.usersUrl).pipe(
+
+  public login(email: string, password: string): Observable<User | null> {
+    return this.http.get<User[]>(this.usersUrl).pipe(
       map((users) => {
-        const user = users.find(
-          (user) => user.email === email && user.password === password
-        );
+        const user = users.find(u => u.email === email && u.password === password);
         if (user) {
-          this.currentUserSubject.next(user.email);
-          localStorage.setItem("currentUser", user.email);
+          this.currentUserSubject.next(user);  // Сохраняем объект User
+          localStorage.setItem("currentUser", JSON.stringify(user)); // Сохраняем объект User
           this.setToken(user.token);  // Устанавливаем токен
           return user;
         } else {
@@ -53,7 +51,7 @@ export class AuthService {
   }
 
   public logout(): void {
-    console.log("Выход " + this.currentUserSubject.value);
+    console.log("Выход пользователя " + (this.currentUserSubject.value?.email || "неизвестно"));
     this.currentUserSubject.next(null);
     localStorage.removeItem("currentUser");
     localStorage.removeItem("authToken");
@@ -63,28 +61,29 @@ export class AuthService {
     return this.getToken() !== null;
   }
 
-  public getCurrentUser(): string | null {
-    return this.currentUserSubject.value;
+  public getCurrentUser(): Observable<User | null> {
+    return this.currentUserSubject.asObservable();
   }
 
-  public getUserInfo(): Observable<any> {
+  public getUserInfo(): Observable<User | null> {
     const token = this.getToken();
     if (!token) {
-      return of(null); // Возвращаем пустое значение, если токен отсутствует
+      return of(null);
     }
-    return this.http.get<any[]>(this.usersUrl).pipe(
-      map((users) => {
-        const user = users.find((user) => user.token === token);
-        return user ? { email: user.email, firstName: user.firstName, lastName: user.lastName } : null;
+    return this.http.get<User[]>(this.usersUrl).pipe(
+      map(users => {
+        const user = users.find(u => u.token === token);
+        return user || null;
       }),
-      catchError((error) => {
-        console.error("Ошибка при получении информации о пользователе:", error);
+      catchError(error => {
+        console.error('Ошибка при получении информации о пользователе:', error);
         return of(null);
       })
     );
   }
 
-  private isBrowser() {
+// Проверяем наличие доступа к window и localStorage
+  private isBrowser(): boolean {
     return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
   }
 }

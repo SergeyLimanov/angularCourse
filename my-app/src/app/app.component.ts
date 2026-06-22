@@ -3,6 +3,7 @@ import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
+import {User} from "./interface/user.interface";
 
 @Component({
   selector: 'app-root',
@@ -24,19 +25,19 @@ export class AppComponent implements OnInit {
   }
 
   private checkAuthentication(): void {
-    this.authService.currentUser.pipe(
+    this.authService.getCurrentUser().pipe(
       switchMap((user) => {
         if (user) {
           this.isAuthenticated = true;
-          this.currentUser = user;
-          return of(user); // Возвращаем текущего пользователя для использования в `subscribe`
+          this.currentUser = `${user.firstName} ${user.lastName}`;  // Преобразуйте в строку
+          return of(user);
         } else {
           this.isAuthenticated = false;
           this.currentUser = '';
           return of(null);
         }
       }),
-      switchMap(() => this.authService.getUserInfo()), // Получаем дополнительную информацию о пользователе, если нужно
+      switchMap(() => this.authService.getUserInfo()),
       catchError((error) => {
         console.error('Ошибка при проверке аутентификации:', error);
         return of(null);
@@ -46,7 +47,7 @@ export class AppComponent implements OnInit {
 
   login(event: any): void {
     this.authService.login(event.login, event.password).pipe(
-      switchMap(() => this.authService.currentUser), // Обновляем текущего пользователя после успешного входа
+      switchMap(() => this.authService.getCurrentUser()),
       catchError((error) => {
         console.error('Ошибка при входе:', error);
         return of(null);
@@ -54,7 +55,7 @@ export class AppComponent implements OnInit {
     ).subscribe(user => {
       if (user) {
         this.isAuthenticated = true;
-        this.currentUser = user;
+        this.currentUser = `${user.firstName} ${user.lastName}`;
         this.router.navigate(['/courses']);
       }
     });

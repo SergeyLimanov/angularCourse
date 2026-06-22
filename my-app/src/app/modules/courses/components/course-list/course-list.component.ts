@@ -3,7 +3,7 @@ import { ConfirmationService, MenuItem } from "primeng/api";
 import { Course } from "../../../../interface/course.interface";
 import { CoursesService } from "../../../../services/courses.service";
 import { Router } from "@angular/router";
-import {debounceTime, Subject} from "rxjs";
+import {debounceTime, filter, Subject} from "rxjs";
 import {switchMap} from "rxjs/operators";
 
 @Component({
@@ -38,6 +38,7 @@ export class CourseListComponent implements OnInit {
     // Подписка на изменения в поле поиска
     this.searchSubject.pipe(
       debounceTime(300), // Задержка для предотвращения частых запросов
+      filter(searchTerm => searchTerm.length >= 3 || searchTerm.length === 0), // Фильтрация ввода
       switchMap(searchTerm => {
         this.start = 0; // Сброс start при новом поиске
         this.courses = []; // Очищаем текущий список курсов
@@ -45,7 +46,6 @@ export class CourseListComponent implements OnInit {
       })
     ).subscribe(data => {
       console.log('Загружено курсов:', data.length);
-
       if (data.length < this.count) { this.hasMoreCourses = false; }
       const newCourses = data.filter(course =>
         !this.courses.some(existingCourse => existingCourse.id === course.id)
@@ -69,7 +69,7 @@ export class CourseListComponent implements OnInit {
     const inputElement = event.target as HTMLInputElement;
     const searchTerm = inputElement.value;
     this.searchField = searchTerm;
-    this.searchSubject.next(searchTerm); // Отправляем новое значение в Subject
+    this.searchSubject.next(searchTerm);
   }
 
   loadCourses(): void {

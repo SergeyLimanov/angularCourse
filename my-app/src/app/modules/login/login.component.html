@@ -1,33 +1,50 @@
 <p-card header="Вход" class="login" [style]="{ width: '400px' }">
-  <div class="p-fluid">
-    <div>
-      <div class="my-2">Email*</div>
-      <input
-        class="p-inputtext-lg"
-        type="email"
-        pInputText
-        [(ngModel)]="login"
-        placeholder="Например user@domain.com"
-        required
-      />
+  <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+    <div class="p-fluid">
+      <div>
+        <div class="my-2">Email*</div>
+        <input
+          class="p-inputtext-lg"
+          type="email"
+          pInputText
+          name="login"
+          [(ngModel)]="login"
+          placeholder="Например user@domain.com"
+          required
+          email
+          #loginField="ngModel"
+        />
+        <div *ngIf="loginField.invalid && loginField.touched" class="error">
+          <small *ngIf="loginField.errors?.['required']">Email обязателен.</small>
+          <small *ngIf="loginField.errors?.['email']">Некорректный формат email.</small>
+        </div>
+      </div>
+      <div>
+        <div class="my-2">Пароль*</div>
+        <input
+          class="p-inputtext-lg"
+          type="password"
+          pInputText
+          name="password"
+          [(ngModel)]="password"
+          placeholder="Ваш пароль"
+          required
+          #passwordField="ngModel"
+        />
+        <div *ngIf="passwordField.invalid && passwordField.touched" class="error">
+          <small *ngIf="passwordField.errors?.['required']">Пароль обязателен.</small>
+        </div>
+      </div>
     </div>
-    <div>
-      <div class="my-2">Пароль*</div>
-      <input
-        class="p-inputtext-lg"
-        type="password"
-        pInputText
-        [(ngModel)]="password"
-        placeholder="Ваш пароль"
-        required
-      />
+    <div class="forgot-password flex justify-content-between my-3">
+      <a href="#" (click)="resetPassword()">Забыли пароль?</a>
+      <div></div>
+      <p-button
+        label="Войти"
+        styleClass="p-button-secondary p-button-lg"
+        type="submit"
+        [disabled]="loginForm.invalid"
+      ></p-button>
     </div>
-  </div>
-  <div class="forgot-password flex justify-content-between my-3">
-    <a href="#" (click)="resetPassword()">Забыли пароль?</a>
-    <div></div>
-    <p-button label="Войти" styleClass="p-button-secondary p-button-lg"
-              (click)="loginAuth()"
-    ></p-button>
-  </div>
+  </form>
 </p-card>

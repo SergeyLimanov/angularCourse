@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import { Course } from '../interface/course.interface';
 import {catchError} from "rxjs/operators";
+import {Author} from "../interface/author";
 
 @Injectable({
   providedIn: 'root'
@@ -55,4 +56,10 @@ export class CoursesService {
   remove(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/courses/${id}`);
   }
+
+  getAuthors(): Observable<Array<Author>> {
+    console.log(this.http.get<Array<Author>>(`${this.apiUrl}/authors`))
+    return this.http.get<Array<Author>>(`${this.apiUrl}/authors`)
+  }
+
 }

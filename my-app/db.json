@@ -66,6 +66,7 @@
       "description": "Explore the basics of iOS app development using Swift. Topics include user interface design, data management, and integration with Apple services. Build your own iOS apps with practical projects.",
       "duration": "103",
       "creationDate": "2024-09-03T02:23:07.804Z",
+      "topRated": true,
       "authors": [
         {
           "id": "d9ef5b626a8d8e4d64925fbac8bdad5d",
@@ -176,6 +177,19 @@
         {
           "id": "d9ef5b626a8d8e4d64925fbac8bdad5d",
           "name": "Иванов Иван"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "title": "Новый курс",
+      "description": "Курс как создать курс",
+      "duration": 909,
+      "creationDate": "2024-09-01T21:00:00.000Z",
+      "authors": [
+        {
+          "id": "5e922c9d185727cbaa1afc1adb908258",
+          "name": "Попов Матвей"
         }
       ]
     }

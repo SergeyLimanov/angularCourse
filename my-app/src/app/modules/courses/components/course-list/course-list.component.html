@@ -9,9 +9,8 @@
              placeholder="Поиск" type="text" pInputText
              [style]="{ 'border-radius': '4px', 'width': '360px'}"
              [(ngModel)]="searchField"
+             (keyup)="onSearch($event)"
       />
-    <p-button label="Поиск" styleClass="p-button-lg" class="px-3"
-              (click)="searchClick()"></p-button>
 
      <p-button
        icon="pi pi-plus"

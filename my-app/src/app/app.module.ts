@@ -17,14 +17,15 @@ import {FormsModule} from "@angular/forms";
 import {CoursesRoutingModule} from "./modules/courses/courses-routing.module";
 import {HttpClientModule, provideHttpClient, withFetch, withInterceptors} from "@angular/common/http";
 import {authInterceptor} from "./services/auth/auth.interceptor";
+import {ToastModule} from "primeng/toast";
+import {MessageService} from "primeng/api";
+import {errorInterceptor} from "./services/error-interceptor.interceptor";
 
 registerLocaleData(localeRu);
 
-
-
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,11 +44,13 @@ registerLocaleData(localeRu);
     AppRoutingModule,
     CoursesRoutingModule,
     HttpClientModule,
+    ToastModule
   ],
   providers: [
+    MessageService,
     provideClientHydration(),
     provideHttpClient(
-      withInterceptors([authInterceptor]),
+      withInterceptors([authInterceptor, errorInterceptor]),
       withFetch())
   ],
   bootstrap: [AppComponent]

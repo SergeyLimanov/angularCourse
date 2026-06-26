@@ -1,6 +1,7 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from "../../services/auth.service";
+import { AuthService } from '../../services/auth.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'login-page',
@@ -13,30 +14,30 @@ export class LoginComponent {
 
   login: string = '';
   password: string = '';
-  authenticated: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  public loginAuth() {
-    this.authService.login(this.login, this.password).subscribe(
-      (user) => {
-        this.authenticated = this.authService.isAuthenticated();
-
-        if (this.authenticated) {
-          this.loginEvent.emit({ login: this.login, password: this.password });
-          this.router.navigate(['/courses']);
-        } else {
-          console.log('Ошибка аутентификации');
+  public onSubmit(form: NgForm) {
+    if (form.valid) {
+      this.authService.login(this.login, this.password).subscribe(
+        (user) => {
+          this.authService.isAuthenticated().subscribe(isAuthenticated => {
+            if (isAuthenticated) {
+              this.loginEvent.emit({ login: this.login, password: this.password });
+              this.router.navigate(['/courses']);
+            } else {
+              console.log('Ошибка аутентификации');
+            }
+          });
+        },
+        (error) => {
+          console.error('Произошла ошибка при аутентификации:', error);
         }
-      },
-      (error) => {
-        console.error('Произошла ошибка при аутентификации:', error);
-      }
-    );
+      );
+    }
   }
 
   public resetPassword() {
-    // Логика восстановления пароля
     console.log('Событие для восстановления пароля');
   }
 }

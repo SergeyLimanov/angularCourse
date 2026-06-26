@@ -1,1 +1,25 @@
-<input type="text" pInputText placeholder="Author works!" class="flex" />
+<div>
+  <span class="p-fluid">
+    <p-autoComplete
+      [formControl]="controlForm"
+      [suggestions]="filteredAuthor"
+      (completeMethod)="filterAuthor($event)"
+      (onUnselect)="deleteAuthor($event.value.id)"
+      (onSelect)="selectAuthor($event)"
+      optionLabel="name"
+      [dropdown]="true"
+      [multiple]="true"
+    >
+    <!-- Шаблон для отображения каждого автора -->
+      <ng-template pTemplate="item" let-author>
+        <div class="p-d-flex p-ai-center">
+          <div class="p-mr-2">{{ author.name }}</div>
+        </div>
+      </ng-template>
+    </p-autoComplete>
+  </span>
+  <!-- Показ ошибки, если поле обязательно и не заполнено -->
+  <div *ngIf="controlForm.invalid && (controlForm.dirty || controlForm.touched)" style="color: red">
+    Обязательное поле
+  </div>
+</div>

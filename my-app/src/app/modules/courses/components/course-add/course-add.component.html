@@ -1,52 +1,72 @@
-<div class="card py-2">
-  <p-breadcrumb [model]="coursesMenu" ></p-breadcrumb>
+<div class="px-6">
+  <div class="card py-2">
+    <p-breadcrumb [model]="coursesMenu" ></p-breadcrumb>
+  </div>
 
+  <p-card [header]="isEditing ? 'Редактировать курс' : 'Добавить курс'">
+    <div class="grid p-fluid">
+      <div class="flex flex-column card-container m-2 col-6 title">
+        <div>Наименование*</div>
+        <input
+          type="text"
+          pInputText
+          [formControl]="title"
+        />
+        <small *ngIf="title.invalid && title.dirty" class="invalid-message p-error">
+          <p *ngIf="title.hasError('required')">Обязательное поле</p>
+          <p *ngIf="title.hasError('maxlength')">Максимальная длина 50 символов</p>
+        </small>
+      </div>
+      <div class="flex flex-column card-container m-2 col-6">
+        <div>Описание*</div>
+        <textarea rows="5" cols="50"
+                  pInputTextarea
+                  [formControl]="description" >
+      </textarea>
+        <small *ngIf="description.invalid && description.dirty" class="invalid-message p-error">
+          <p *ngIf="description.hasError('required')">Обязательное поле</p>
+          <p *ngIf="description.hasError('maxlength')">Максимальная длина 500 символов</p>
+        </small>
+      </div>
+      <div class="flex flex-column card-container m-2 col-6 " >
+        <div >Продолжительность*</div>
+        <app-duration [duration]="duration"  ></app-duration>
+        <small *ngIf="duration.invalid && duration.dirty" class="invalid-message p-error">
+          <p *ngIf="duration.hasError('required')">Обязательное поле</p>
+        </small>
+      </div>
+      <div class="flex flex-column card-container m-2 col-6">
+        <div>Дата*</div>
+        <p-calendar
+          qCalendarMask
+          dateFormat="dd/mm/yy"
+          [showIcon]="true"
+          [formControl]="creationDate">
+        </p-calendar>
+        <small *ngIf="creationDate.invalid && creationDate.dirty" class="invalid-message p-error">
+          <p *ngIf="creationDate.hasError('required')">Обязательное поле</p>
+        </small>
+      </div>
+      <div class="flex flex-column card-container m-2 col-6">
+        <div>Авторы*</div>
+        <app-author [controlForm]="authors"></app-author>
+
+      </div>
+    </div>
+    <div class="flex ">
+      <div class="flex ">
+        <p-button label="Отмена" styleClass="p-button-secondary" (click)="cancel()" ></p-button>
+      </div>
+      <div class="flex ml-3">
+        <p-button label="Сохранить"  type="submit" (click)="save()" [disabled]="courseAddForm.invalid"></p-button>
+
+      </div>
+    </div>
+
+  </p-card>
 </div>
 
-<p-card [header]="isEditing ? 'Редактировать курс' : 'Добавить курс'">
-  <div class="grid p-fluid ">
-    <div class="flex flex-column card-container m-2 col-6">
-      <div>Наименование*</div>
-      <input type="text" pInputText [(ngModel)]="newCourse.title" />
-    </div>
-    <div class="flex flex-column card-container m-2 col-6">
-      <div>Описание*</div>
-      <textarea
-        rows="5"
-        cols="50"
-        pInputTextarea
-        [(ngModel)]="newCourse.description">
-      </textarea>
-    </div>
-    <div class="flex flex-column card-container m-2 col-6">
-      <div>Продолжительность*</div>
-      <app-duration style="width: 54rem;" [(duration)]="newCourse.duration"> </app-duration>
-    </div>
-    <div class="flex flex-column card-container m-2 col-6">
-      <div>Дата*</div>
-      <p-calendar
-        qCalendarMask
-        dateFormat="dd.mm.yy"
-        [(ngModel)]="newCourse.creationDate"
-        [showIcon]="true">
-      </p-calendar>
-    </div>
-    <div class="flex flex-column card-container m-2 col-6">
-      <div>Авторы*</div>
-      <app-author></app-author>
-    </div>
-  </div>
-  <div class="flex  ">
-    <div class="flex ">
-      <p-button label="Отмена" styleClass="p-button-secondary" (click)="cancel()"></p-button>
-    </div>
-    <div class="flex ml-3">
-      <p-button label="Сохранить" (click)="save()"></p-button>
-    </div>
 
 
-  </div>
-
-</p-card>
 
 

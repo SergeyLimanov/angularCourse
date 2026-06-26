@@ -1,12 +1,16 @@
-<div class="flex gap-3">
+<div class="flex gap-3" style="width: 60rem">
   <div class="flex-auto p-fluid">
     <p-inputNumber
-      [(ngModel)]="duration"
+      [formControl]="duration"
       mode="decimal"
       [showButtons]="true"
-      (ngModelChange)="onDurationChange($event)"
       inputId="minmax-buttons"
-      [min]="0">
-    </p-inputNumber></div>
-  <div class="flex align-items-center justify-content-center" >  {{duration | duration}}</div>
+      [min]="0"
+      [max]="1000"
+      (onInput)="onDurationChange($event)"
+    >
+    </p-inputNumber>
+  </div>
+  <div class="flex align-items-center justify-content-center">  {{duration.value | duration}}</div>
 </div>
+

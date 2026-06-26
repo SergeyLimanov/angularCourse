@@ -4,7 +4,7 @@ import {CourseListComponent} from "./components/course-list/course-list.componen
 import {CourseItemComponent} from "./components/course-item/course-item.component";
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { FormsModule } from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { BreadcrumbModule } from "primeng/breadcrumb";
 import {CoursesComponent} from "./courses.component";
 import {InputTextModule} from "primeng/inputtext";
@@ -23,6 +23,8 @@ import {CourseBorderDirective} from "../../shared/directive/course-border.direct
 import {DialogModule} from "primeng/dialog";
 import {CoursesRoutingModule} from "./courses-routing.module";
 import {ProgressSpinnerModule} from "primeng/progressspinner";
+import {AutoCompleteModule} from "primeng/autocomplete";
+import {ChipModule} from "primeng/chip";
 
 @NgModule({
   declarations: [
@@ -37,21 +39,24 @@ import {ProgressSpinnerModule} from "primeng/progressspinner";
     AuthorComponent,
     CourseBorderDirective
   ],
-    imports: [
-        CommonModule,
-        CardModule,
-        ButtonModule,
-        InputTextModule,
-        FormsModule,
-        ConfirmDialogModule,
-        BreadcrumbModule,
-        InputTextareaModule,
-        InputNumberModule,
-        CalendarModule,
-        DialogModule,
-        CoursesRoutingModule,
-        ProgressSpinnerModule
-    ],
+  imports: [
+    CommonModule,
+    CardModule,
+    ButtonModule,
+    InputTextModule,
+    FormsModule,
+    ConfirmDialogModule,
+    BreadcrumbModule,
+    InputTextareaModule,
+    InputNumberModule,
+    CalendarModule,
+    DialogModule,
+    CoursesRoutingModule,
+    ProgressSpinnerModule,
+    ReactiveFormsModule,
+    AutoCompleteModule,
+    ChipModule
+  ],
   providers: [
     ConfirmationService,
   ],

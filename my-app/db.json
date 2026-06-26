@@ -181,7 +181,7 @@
       ]
     },
     {
-      "id": 13,
+      "id": "13",
       "title": "Новый курс",
       "description": "Курс как создать курс",
       "duration": 909,
@@ -190,6 +190,19 @@
         {
           "id": "5e922c9d185727cbaa1afc1adb908258",
           "name": "Попов Матвей"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "title": "фв",
+      "description": "1",
+      "duration": "11",
+      "creationDate": "2026-06-01T20:00:00.000Z",
+      "authors": [
+        {
+          "id": "d9ef5b626a8d8e4d64925fbac8bdad5d",
+          "name": "Иванов Иван"
         }
       ]
     }

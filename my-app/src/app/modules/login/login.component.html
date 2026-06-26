@@ -43,7 +43,7 @@
         label="Войти"
         styleClass="p-button-secondary p-button-lg"
         type="submit"
-        [disabled]="loginForm.invalid"
+        [disabled]="loginForm.invalid ?? false"
       ></p-button>
     </div>
   </form>

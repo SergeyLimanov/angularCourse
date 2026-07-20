@@ -3,7 +3,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {SharedModule} from "./shared/shared.module";
 import {CoursesModule} from "./modules/courses/courses.module";
-import { NgModule} from "@angular/core";
+import { NgModule, isDevMode} from "@angular/core";
 import {LoginModule} from "./modules/login/login.module";
 import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {CommonModule, registerLocaleData} from "@angular/common";
@@ -20,6 +20,10 @@ import {authInterceptor} from "./services/auth/auth.interceptor";
 import {ToastModule} from "primeng/toast";
 import {MessageService} from "primeng/api";
 import {errorInterceptor} from "./services/error-interceptor.interceptor";
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import {environment} from "../environments/environment";
 
 registerLocaleData(localeRu);
 
@@ -44,7 +48,12 @@ registerLocaleData(localeRu);
     AppRoutingModule,
     CoursesRoutingModule,
     HttpClientModule,
-    ToastModule
+    ToastModule,
+    StoreModule.forRoot(reducers, { metaReducers }),
+    !environment.production
+      ? StoreDevtoolsModule.instrument({ maxAge: 25 })
+      : [],
+    // isDevMode() ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [
     MessageService,

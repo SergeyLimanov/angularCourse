@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import { Course } from '../interface/course.interface';
-import {catchError} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {Author} from "../interface/author";
 
 @Injectable({
@@ -36,19 +36,27 @@ export class CoursesService {
 
 
 
-  getCourses(start: number, count: number, searchTerm?: string): Observable<Course[]> {
+  getCourses(start: number = 0, count: number = 10, searchTerm?: string): Observable<{ courses: Course[], total: number }> {
     let url = `${this.apiUrl}/courses?_start=${start}&_limit=${count}`;
     if (searchTerm) {
       url += `&q=${searchTerm}`; // Параметр поиска
     }
-    return this.http.get<Course[]>(url)
+    return this.http.get<Course[]>(url, { observe: 'response' })
       .pipe(
+        map(response => {
+          const total = response.headers.get('X-Total-Count');
+          return {
+            courses: response.body || [],
+            total: total ? +total : 0  // Проверка и использование значения по умолчанию
+          };
+        }),
         catchError(error => {
           console.error('Error fetching courses', error);
           return throwError(() => new Error('Error fetching courses'));
         })
       );
   }
+
   // Создание нового курса
   create(course: Course): Observable<Course> {
     return this.http.post<Course>(`${this.apiUrl}/courses`, course);

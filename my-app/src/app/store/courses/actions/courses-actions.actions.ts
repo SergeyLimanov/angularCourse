@@ -1,8 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 import {Course} from "../../../interface/course.interface";
 
-export const getCourses = createAction('[Courses] Load Courses');
-export const getCoursesSuccess = createAction('[Courses] Load Courses Success', props<{ courses: Course[] }>());
+export const getCourses = createAction('[Courses] Load Courses', props<{start: number, count: number }>());
+export const getCoursesSuccess = createAction('[Courses] Load Courses Success', props<{ courses: Course[] , total: number}>());
 export const getCoursesFailure = createAction('[Courses] Load Courses Failure', props<{ error: any }>());
 
 export const searchCourses = createAction('[Courses] Search Courses', props<{ input: string }>());

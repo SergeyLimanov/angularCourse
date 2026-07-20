@@ -3,7 +3,7 @@ import { environment } from '../../environments/environment';
 import * as fromCourses from '../store/courses/reducers/courses-reducer.reducer';
 
 export interface State {
-  [fromCourses.coursesReducerFeatureKey]: fromCourses.CoursesState;
+  [fromCourses.coursesReducerFeatureKey]: fromCourses.State;
 }
 
 export const reducers: ActionReducerMap<State> = {

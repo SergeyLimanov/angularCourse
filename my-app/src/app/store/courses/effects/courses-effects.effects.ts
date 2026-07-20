@@ -7,22 +7,34 @@ import { of } from 'rxjs';
 
 @Injectable()
 export class CoursesEffects {
+  constructor(
+    private actions$: Actions,
+    private coursesService: CoursesService
+  ) {}
 
-  getCourses$ = createEffect(() => this.actions$.pipe(
-    ofType(CoursesActions.getCourses),
-    switchMap(() => this.coursesService.getAllCourses().pipe(
-      map(courses => CoursesActions.getCoursesSuccess({ courses })),
-      catchError(error => of(CoursesActions.getCoursesFailure({ error })))
-    ))
-  ));
 
-  searchCourses$ = createEffect(() => this.actions$.pipe(
-    ofType(CoursesActions.searchCourses),
-    switchMap(({ input }) => this.coursesService.searchCourses(input).pipe(
-      map(data => CoursesActions.searchCoursesSuccess({ data })),
-      catchError(error => of(CoursesActions.searchCoursesFailure({ error })))
-    ))
-  ));
+  getCourses$=createEffect(() =>
+    this.actions$.pipe(
+      ofType(CoursesActions.getCourses),
+      switchMap(() =>
+        this.coursesService.getCourses(0, 5)
+          .pipe(
+            map(response => CoursesActions.getCoursesSuccess({ courses: response.courses, total: response.total })),
+            catchError(error => of(CoursesActions.getCoursesFailure({ error })))
+          ))));
+
+  searchCourses$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CoursesActions.searchCourses),
+      switchMap(({ input }) =>
+        this.coursesService.getCourses(0, 5, input)  // Параметры поиска и пагинации
+          .pipe(
+            map(response => CoursesActions.searchCoursesSuccess({ data: response.courses })),
+            catchError(error => of(CoursesActions.searchCoursesFailure({ error })))
+          )
+      )
+    )
+  );
 
   addCourse$ = createEffect(() => this.actions$.pipe(
     ofType(CoursesActions.addCourse),
@@ -48,8 +60,5 @@ export class CoursesEffects {
     ))
   ));
 
-  constructor(
-    private actions$: Actions,
-    private coursesService: CoursesService
-  ) {}
+
 }

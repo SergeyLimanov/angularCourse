@@ -4,26 +4,48 @@ import {Course} from "../../../interface/course.interface";
 
 export const coursesReducerFeatureKey = 'coursesStates';
 
-export interface CoursesState {
+export interface State {
   courses: Course[];
   filteredCourses: Course[];
   loading: boolean;
   error: any;
+  totalCourses: number;
+  currentPage: number;
+  pageSize: number;
 }
 
-export const initialState: CoursesState = {
+export const initialState: State = {
   courses: [],
   filteredCourses: [],
   loading: false,
-  error: null
+  error: null,
+  totalCourses: 0,
+  currentPage: 1,  // Начальная страница
+  pageSize: 5,    // Размер страницы
 };
 
 export const coursesReducer = createReducer(
   initialState,
-  on(CoursesActions.getCourses, state => ({ ...state, loading: true })),
-  on(CoursesActions.getCoursesSuccess, (state, { courses }) => ({...state, courses, filteredCourses: courses, loading: false})),
-  on(CoursesActions.getCoursesFailure, (state, { error }) => ({...state, error, loading: false})),
-
+  on(CoursesActions.getCourses, (state, { start, count }) => ({
+    ...state,
+    loading: true,
+    currentPage: start / count,
+    pageSize: count
+  })),
+  on(CoursesActions.getCoursesSuccess, (state, { courses, total }) => ({
+    ...state,
+    courses: courses  || [],
+    filteredCourses: courses,
+    loading: false,
+    totalCourses: total,
+    currentPage: state.currentPage,
+    pageSize: state.pageSize,
+  })),
+  on(CoursesActions.getCoursesFailure, (state, { error }) => ({
+    ...state,
+    error,
+    loading: false
+  })),
   on(CoursesActions.searchCourses, state => ({ ...state, loading: true })),
   on(CoursesActions.searchCoursesSuccess, (state, { data }) => ({...state, filteredCourses: data, loading: false})),
   on(CoursesActions.searchCoursesFailure, (state, { error }) => ({...state, error, loading: false})),

@@ -1,25 +1,39 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
-import { State } from '../../index'; // Ваш корневой state
-import {coursesReducerFeatureKey, CoursesState} from '../reducers/courses-reducer.reducer';
+import * as fromCourses  from '../reducers/courses-reducer.reducer';
+import {State} from "../reducers/courses-reducer.reducer";
 
 // Создание feature selector для получения части состояния курсов
 const getCoursesFeatureState =
-  createFeatureSelector<State, CoursesState>(coursesReducerFeatureKey);
+  createFeatureSelector<fromCourses.State>(fromCourses.coursesReducerFeatureKey);
 
+export const selectTotalCourses = createSelector(
+  getCoursesFeatureState,
+  (state) => state.totalCourses
+);
+
+export const selectCurrentPage = createSelector(
+  getCoursesFeatureState,
+  (state) => state.currentPage
+);
+
+export const selectPageSize = createSelector(
+  getCoursesFeatureState,
+  (state) => state.pageSize
+);
 // Селектор для получения списка всех курсов
 export const selectAllCourses = createSelector(
   getCoursesFeatureState,
-  (state: CoursesState) => state.courses
+  (state) => state.courses
 );
 
 // Селектор для получения ошибки при загрузке курсов
 export const selectCoursesError = createSelector(
   getCoursesFeatureState,
-  (state: CoursesState) => state.error
+  (state) => state.error
 );
 
 // Селектор для получения состояния загрузки курсов
 export const selectLoading = createSelector(
   getCoursesFeatureState,
-  (state: CoursesState) => state.loading
+  (state) => state.loading
 );

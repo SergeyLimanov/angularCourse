@@ -26,6 +26,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import {environment} from "../environments/environment";
 import {CoursesEffects} from "./store/courses/effects/courses-effects.effects";
 import {EffectsModule} from "@ngrx/effects";
+import {coursesReducer, coursesReducerFeatureKey} from "./store/courses/reducers/courses-reducer.reducer";
 
 registerLocaleData(localeRu);
 
@@ -52,6 +53,9 @@ registerLocaleData(localeRu);
     HttpClientModule,
     ToastModule,
     StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forRoot(reducers, { metaReducers }),  // Корневые редукторы
+    StoreModule.forFeature(coursesReducerFeatureKey, coursesReducer),  // Редуктор для фичи
+
     !environment.production
       ? StoreDevtoolsModule.instrument({ maxAge: 25 })
       : [],

@@ -1,37 +1,42 @@
 import { createReducer, on } from '@ngrx/store';
+import * as CoursesActions from '../actions/courses-actions.actions';
 import {Course} from "../../../interface/course.interface";
-import * as fromCoursesActions from '../actions/courses-actions.actions';
 
 export const coursesReducerFeatureKey = 'coursesStates';
 
-export interface State {
-  isLoading: boolean;
+export interface CoursesState {
   courses: Course[];
-  allCourses: Course[];
-  courseId: number | null;
+  filteredCourses: Course[];
+  loading: boolean;
+  error: any;
 }
 
-
-export const initialState: State = {
-  isLoading: false,
+export const initialState: CoursesState = {
   courses: [],
-  allCourses: [],
-  courseId: null
+  filteredCourses: [],
+  loading: false,
+  error: null
 };
 
-
-export const reducer = createReducer(
+export const coursesReducer = createReducer(
   initialState,
-  on(fromCoursesActions.getCourses, fromCoursesActions.searchCourses, fromCoursesActions.editCourse, fromCoursesActions.deleteCourse, fromCoursesActions.addCourse, (state) => ({ ...state, isLoading: true })),
-  on(fromCoursesActions.getCoursesSuccess, fromCoursesActions.searchCoursesSuccess, (state, { data }) => ({ ...state, courses: [...data], isLoading: false })),
-  on(fromCoursesActions.getCoursesFailure, fromCoursesActions.searchCoursesFailure, fromCoursesActions.deleteCourseFailure, fromCoursesActions.addCourseFailure, fromCoursesActions.editCourseFailure, fromCoursesActions.deleteCourseFailure, (state) => ({ ...state, isLoading: false })),
-  on(fromCoursesActions.deleteCourseSuccess, (state, { courseId }) => ({...initialState})),
-  on(fromCoursesActions.addCourseSuccess, (state, { course }) => ({...state, allCourses: [...state.courses, course], isLoading: false})),
-  on(fromCoursesActions.editCourseSuccess, (state, { course }) => ({...state, courses: state.courses.map(c => c.id === course.id ? course : c), isLoading: false})),
-  on(fromCoursesActions.clearCourses, (state) => ({ ...initialState })),
+  on(CoursesActions.getCourses, state => ({ ...state, loading: true })),
+  on(CoursesActions.getCoursesSuccess, (state, { courses }) => ({...state, courses, filteredCourses: courses, loading: false})),
+  on(CoursesActions.getCoursesFailure, (state, { error }) => ({...state, error, loading: false})),
+
+  on(CoursesActions.searchCourses, state => ({ ...state, loading: true })),
+  on(CoursesActions.searchCoursesSuccess, (state, { data }) => ({...state, filteredCourses: data, loading: false})),
+  on(CoursesActions.searchCoursesFailure, (state, { error }) => ({...state, error, loading: false})),
+
+  on(CoursesActions.addCourse, state => ({ ...state, loading: true })),
+  on(CoursesActions.addCourseSuccess, (state, { course }) => ({...state, courses: [...state.courses, course], filteredCourses: [...state.filteredCourses, course], loading: false})),
+  on(CoursesActions.addCourseFailure, (state, { error }) => ({...state, error, loading: false})),
+
+  on(CoursesActions.editCourse, state => ({ ...state, loading: true })),
+  on(CoursesActions.editCourseSuccess, (state, { course }) => ({...state, courses: state.courses.map(c => c.id === course.id ? course : c), filteredCourses: state.filteredCourses.map(c => c.id === course.id ? course : c), loading: false})),
+  on(CoursesActions.editCourseFailure, (state, { error }) => ({...state, error, loading: false})),
+
+  on(CoursesActions.deleteCourse, state => ({ ...state, loading: true })),
+  on(CoursesActions.deleteCourseSuccess, (state, { id }) => ({...state, courses: state.courses.filter(c => c.id !== id), filteredCourses: state.filteredCourses.filter(c => c.id !== id), loading: false})),
+  on(CoursesActions.deleteCourseFailure, (state, { error }) => ({...state, error, loading: false}))
 );
-
-export function authReducerFeatureKey<T>(authReducerFeatureKey: any) {
-  throw new Error('Function not implemented.');
-}
-

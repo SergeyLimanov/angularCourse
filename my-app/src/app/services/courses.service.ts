@@ -24,7 +24,18 @@ export class CoursesService {
       );
   }
 
+  public getCoursesList(limit = 4, page = 1): Observable<Course[]> {
+    return this.http.get<Array<Course>>(`${this.apiUrl}/courses?_page=${page}&_limit=${limit}`)
+  }
+
+
   // Метод для получения курсов с параметрами поиска
+  public searchCourses(string: string): Observable<Course[]> {
+    return this.http.get<Course[]>(`${this.apiUrl}/courses/?q=${string}`)
+  }
+
+
+
   getCourses(start: number, count: number, searchTerm?: string): Observable<Course[]> {
     let url = `${this.apiUrl}/courses?_start=${start}&_limit=${count}`;
     if (searchTerm) {

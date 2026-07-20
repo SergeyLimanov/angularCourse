@@ -3,7 +3,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {SharedModule} from "./shared/shared.module";
 import {CoursesModule} from "./modules/courses/courses.module";
-import { NgModule, isDevMode} from "@angular/core";
+import { NgModule} from "@angular/core";
 import {LoginModule} from "./modules/login/login.module";
 import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {CommonModule, registerLocaleData} from "@angular/common";
@@ -24,6 +24,8 @@ import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import {environment} from "../environments/environment";
+import {CoursesEffects} from "./store/courses/effects/courses-effects.effects";
+import {EffectsModule} from "@ngrx/effects";
 
 registerLocaleData(localeRu);
 
@@ -53,7 +55,7 @@ registerLocaleData(localeRu);
     !environment.production
       ? StoreDevtoolsModule.instrument({ maxAge: 25 })
       : [],
-    // isDevMode() ? StoreDevtoolsModule.instrument() : []
+    EffectsModule.forRoot([CoursesEffects]),
   ],
   providers: [
     MessageService,

@@ -1,47 +1,43 @@
 <div class="py-3">
-  <p-breadcrumb [model]="items" ></p-breadcrumb>
+  <p-breadcrumb [model]="items"></p-breadcrumb>
 </div>
 
 <div class="flex flex-column gap-4">
   <span class="p-input-icon-left">
     <i class="pi pi-search px-1"></i>
-      <input class="p-inputtext-lg pl-5"
-             placeholder="Поиск" type="text" pInputText
-             [style]="{ 'border-radius': '4px', 'width': '360px'}"
-             [(ngModel)]="searchField"
-             (keyup)="onSearch($event)"
-      />
+    <input class="p-inputtext-lg pl-5"
+           placeholder="Поиск" type="text" pInputText
+           [style]="{ 'border-radius': '4px', 'width': '360px'}"
+           [(ngModel)]="searchField"
+           (keyup)="onSearch($event)" />
 
-     <p-button
-       icon="pi pi-plus"
-       label="Добавить курс"
-       styleClass="p-button-lg"
-       class="absolute right-0"
-       (click)="openAddCourseForm()"></p-button>
-
+    <p-button
+      icon="pi pi-plus"
+      label="Добавить курс"
+      styleClass="p-button-lg"
+      class="absolute right-0"
+      (click)="openAddCourseForm()"></p-button>
   </span>
-  <div *ngIf="filterCourses.length > 0; else noData" class="flex flex-column gap-4 w-12" >
-    <app-course-item *ngFor="let course of filterCourses | orderBy: 'creationDate':'desc'
-    trackBy: trackByCourseId" [course]="course"
 
+  <div *ngIf="hasCourses$ | async; else noData" class="flex flex-column gap-4 w-12">
+    <app-course-item *ngFor="let course of (courses$ | async) trackBy: trackByCourseId" [course]="course"
                      (editCourseEvent)="selectCourse($event)"
                      (deleteCourseEvent)="deleteCourse($event)">
     </app-course-item>
   </div>
   <ng-template #noData>
-    <div class="flex flex-column notFind align-items-center justify-content-center" >
+    <div class="flex flex-column notFind align-items-center justify-content-center">
       <img src="././assets/noDataIcon.png" alt="" class="m-4">
       <h2 class="text">Ничего не найдено</h2>
       <p-button label="Сбросить фильтры" styleClass="p-button-lg" (click)="clearFilter()"></p-button>
     </div>
   </ng-template>
 </div>
-<div class="w-12 flex justify-content-center" *ngIf="hasMoreCourses && filterCourses.length > 0">
+
+<div class="w-12 flex justify-content-center" *ngIf="showLoadMore$ | async">
   <button pButton class="loadMore p-button-lg flex align-items-center justify-content-center"
-          [disabled]="!hasMoreCourses"
-          (click)="loadMore()">  Загрузка курсов
+          (click)="loadMore()">Загрузка курсов
   </button>
 </div>
-
 
 <p-confirmDialog></p-confirmDialog>

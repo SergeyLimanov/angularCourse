@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { AuthorComponent } from './author.component';
 import { CoursesService } from '../../../../../../services/courses.service';
@@ -13,7 +14,7 @@ describe('AuthorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AuthorComponent],
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, ReactiveFormsModule],
       providers: [
         { provide: CoursesService, useValue: { getAuthors: () => of([]) } }
       ],
@@ -23,6 +24,7 @@ describe('AuthorComponent', () => {
 
     fixture = TestBed.createComponent(AuthorComponent);
     component = fixture.componentInstance;
+    component.controlForm = new FormControl([]);
     fixture.detectChanges();
   });
 

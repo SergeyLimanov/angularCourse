@@ -1,5 +1,5 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { Component } from '@angular/core';
 import { CourseBorderDirective } from './course-border.directive';
 import { Course } from '../../interface/course.interface';
 
@@ -15,8 +15,6 @@ class TestHostComponent {
 describe('CourseBorderDirective', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let component: TestHostComponent;
-  let renderer: Renderer2;
-  let elementRef: ElementRef;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -28,11 +26,7 @@ describe('CourseBorderDirective', () => {
   });
 
   it('should create an instance', () => {
-    const directive = new CourseBorderDirective(
-      new ElementRef(document.createElement('div')),
-      TestBed.inject(Renderer2)
-    );
-    expect(directive).toBeTruthy();
+    expect(fixture.componentInstance).toBeTruthy();
   });
 
   it('should set green border for fresh course (within 14 days)', () => {
@@ -47,10 +41,10 @@ describe('CourseBorderDirective', () => {
       creationDate: recentDate,
     };
 
-    spyOn(TestBed.inject(Renderer2), 'setStyle');
     fixture.detectChanges();
 
-    expect(TestBed.inject(Renderer2).setStyle).toHaveBeenCalled();
+    const childEl = fixture.nativeElement.querySelector('.p-card');
+    expect(childEl.style.border).toContain('green');
   });
 
   it('should set blue border for upcoming course (future date)', () => {
@@ -65,10 +59,10 @@ describe('CourseBorderDirective', () => {
       creationDate: futureDate,
     };
 
-    spyOn(TestBed.inject(Renderer2), 'setStyle');
     fixture.detectChanges();
 
-    expect(TestBed.inject(Renderer2).setStyle).toHaveBeenCalled();
+    const childEl = fixture.nativeElement.querySelector('.p-card');
+    expect(childEl.style.border).toContain('blue');
   });
 
   it('should not set any border for old course (older than 14 days)', () => {
@@ -83,9 +77,9 @@ describe('CourseBorderDirective', () => {
       creationDate: oldDate,
     };
 
-    const setStyleSpy = spyOn(TestBed.inject(Renderer2), 'setStyle');
     fixture.detectChanges();
 
-    expect(setStyleSpy).not.toHaveBeenCalled();
+    const childEl = fixture.nativeElement.querySelector('.p-card');
+    expect(childEl.style.border).toBe('');
   });
 });

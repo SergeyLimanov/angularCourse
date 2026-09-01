@@ -1,8 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
 import { CourseItemComponent } from './course-item.component';
 import { DurationPipe } from '../../../../shared/pipes/duration.pipe';
 import { Course } from '../../../../interface/course.interface';
+
+registerLocaleData(localeRu);
 
 describe('CourseItemComponent', () => {
   let component: CourseItemComponent;

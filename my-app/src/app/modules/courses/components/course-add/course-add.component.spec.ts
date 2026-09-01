@@ -62,7 +62,7 @@ describe('CourseAddComponent', () => {
 
     fixture = TestBed.createComponent(CourseAddComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    component.ngOnInit();
   });
 
   it('should create', () => {

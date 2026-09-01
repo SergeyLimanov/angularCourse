@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, NO_ERRORS_SCHEMA } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { HeaderComponent } from './header.component';
@@ -15,7 +15,8 @@ describe('HeaderComponent', () => {
       imports: [HttpClientTestingModule],
       providers: [
         { provide: AuthService, useValue: { getCurrentUser: () => of(null), logout: () => {} } }
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
     

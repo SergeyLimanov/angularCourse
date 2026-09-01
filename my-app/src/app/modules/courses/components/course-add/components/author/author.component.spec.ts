@@ -25,7 +25,6 @@ describe('AuthorComponent', () => {
     fixture = TestBed.createComponent(AuthorComponent);
     component = fixture.componentInstance;
     component.controlForm = new FormControl([]);
-    fixture.detectChanges();
   });
 
   it('should create', () => {

@@ -30,7 +30,7 @@ describe('authGuard', () => {
 
   it('should return true when user is authenticated', (done) => {
     mockAuthService.isAuthenticated.and.returnValue(of(true));
-    executeGuard({} as any, {} as any).subscribe(result => {
+    (executeGuard({} as any, {} as any) as any).subscribe((result: boolean) => {
       expect(result).toBeTrue();
       expect(mockRouter.navigate).not.toHaveBeenCalled();
       done();
@@ -39,7 +39,7 @@ describe('authGuard', () => {
 
   it('should return false and navigate to /login when not authenticated', (done) => {
     mockAuthService.isAuthenticated.and.returnValue(of(false));
-    executeGuard({} as any, {} as any).subscribe(result => {
+    (executeGuard({} as any, {} as any) as any).subscribe((result: boolean) => {
       expect(result).toBeFalse();
       expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
       done();
@@ -48,7 +48,7 @@ describe('authGuard', () => {
 
   it('should return false and navigate to /login on error', (done) => {
     mockAuthService.isAuthenticated.and.returnValue(throwError(() => new Error('test error')));
-    executeGuard({} as any, {} as any).subscribe(result => {
+    (executeGuard({} as any, {} as any) as any).subscribe((result: boolean) => {
       expect(result).toBeFalse();
       expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
       done();

@@ -84,6 +84,7 @@ describe('CourseListComponent', () => {
     const course: Course = { id: 1, title: 'Test Course', description: '', duration: 0, creationDate: new Date() };
     mockConfirmationService.confirm.and.callFake((options: any) => {
       options.accept();
+      return null as any;
     });
     component.deleteCourse(course);
     expect(mockStore.dispatch).toHaveBeenCalledWith(CoursesActions.deleteCourse({ id: 1 }));
@@ -93,6 +94,7 @@ describe('CourseListComponent', () => {
     const course: Course = { id: 1, title: 'Test Course', description: '', duration: 0, creationDate: new Date() };
     mockConfirmationService.confirm.and.callFake((options: any) => {
       options.reject();
+      return null as any;
     });
     component.deleteCourse(course);
     expect(mockStore.dispatch).not.toHaveBeenCalledWith(CoursesActions.deleteCourse({ id: 1 }));

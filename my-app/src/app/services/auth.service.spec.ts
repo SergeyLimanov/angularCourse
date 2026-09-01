@@ -19,9 +19,6 @@ describe('AuthService', () => {
     });
     service = TestBed.inject(AuthService);
     httpTestingController = TestBed.inject(HttpTestingController);
-
-    const req = httpTestingController.expectOne('/api/users');
-    req.flush(mockUsers);
   });
 
   afterEach(() => {

@@ -12,9 +12,9 @@ describe('OrderByPipe', () => {
   });
 
   it('should return original value if not an array', () => {
-    expect(pipe.transform(null as any, 'name')).toEqual(null);
-    expect(pipe.transform(undefined as any, 'name')).toEqual(undefined);
-    expect(pipe.transform({} as any, 'name')).toEqual({});
+    expect(pipe.transform(null as any, 'name')).toEqual(null as any);
+    expect(pipe.transform(undefined as any, 'name')).toEqual(undefined as any);
+    expect(pipe.transform({} as any, 'name')).toEqual({} as any);
   });
 
   it('should sort array ascending by field', () => {

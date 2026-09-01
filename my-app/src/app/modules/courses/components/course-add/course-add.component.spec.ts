@@ -127,23 +127,23 @@ describe('CourseAddComponent', () => {
   });
 
   it('should return title FormControl from getter', () => {
-    expect(component.title).toBe(component.courseAddForm.get('title'));
+    expect(component.title).toBe(component.courseAddForm.get('title') as any);
   });
 
   it('should return description FormControl from getter', () => {
-    expect(component.description).toBe(component.courseAddForm.get('description'));
+    expect(component.description).toBe(component.courseAddForm.get('description') as any);
   });
 
   it('should return duration FormControl from getter', () => {
-    expect(component.duration).toBe(component.courseAddForm.get('duration'));
+    expect(component.duration).toBe(component.courseAddForm.get('duration') as any);
   });
 
   it('should return creationDate FormControl from getter', () => {
-    expect(component.creationDate).toBe(component.courseAddForm.get('creationDate'));
+    expect(component.creationDate).toBe(component.courseAddForm.get('creationDate') as any);
   });
 
   it('should return authors FormControl from getter', () => {
-    expect(component.authors).toBe(component.courseAddForm.get('authors'));
+    expect(component.authors).toBe(component.courseAddForm.get('authors') as any);
   });
 
   it('should call router.navigate on cancel()', () => {

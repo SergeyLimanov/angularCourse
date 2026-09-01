@@ -42,10 +42,12 @@ describe('SpinnerService', () => {
 
   it('should show spinner on runWithMinimumDelay()', (done) => {
     service.runWithMinimumDelay(of('test')).subscribe();
-    service.spinnerState$.subscribe(state => {
-      expect(state).toBeTrue();
-      done();
-    });
+    setTimeout(() => {
+      service.spinnerState$.subscribe(state => {
+        expect(state).toBeTrue();
+        done();
+      });
+    }, 50);
   });
 
   it('should emit value through runWithMinimumDelay()', (done) => {

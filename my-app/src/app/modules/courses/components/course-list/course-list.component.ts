@@ -15,7 +15,6 @@ import {
 } from '../../../../store/courses/selectors/courses-selectors.selectors';
 import {Router} from "@angular/router";
 import {ConfirmationService, MenuItem} from "primeng/api";
-import {log} from "node:util";
 
 @Component({
   selector: 'app-course-list',

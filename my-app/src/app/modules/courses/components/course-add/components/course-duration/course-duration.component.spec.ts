@@ -23,4 +23,20 @@ describe('CourseDurationComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have duration input initialized', () => {
+    expect(component.duration).toEqual([]);
+  });
+
+  it('should emit durationChange on onDurationChange()', () => {
+    let emittedValue: any;
+    component.durationChange.subscribe(value => emittedValue = value);
+    component.duration = 120;
+    component.onDurationChange({} as any);
+    expect(emittedValue).toBe(120);
+  });
+
+  it('should call ngOnInit without errors', () => {
+    expect(() => component.ngOnInit()).not.toThrow();
+  });
 });

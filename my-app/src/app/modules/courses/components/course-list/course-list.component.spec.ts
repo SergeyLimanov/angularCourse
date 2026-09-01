@@ -80,6 +80,24 @@ describe('CourseListComponent', () => {
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/courses/3']);
   });
 
+  it('should dispatch deleteCourse action when confirm is accepted', () => {
+    const course: Course = { id: 1, title: 'Test Course', description: '', duration: 0, creationDate: new Date() };
+    mockConfirmationService.confirm.and.callFake((options: any) => {
+      options.accept();
+    });
+    component.deleteCourse(course);
+    expect(mockStore.dispatch).toHaveBeenCalledWith(CoursesActions.deleteCourse({ id: 1 }));
+  });
+
+  it('should not dispatch deleteCourse action when confirm is rejected', () => {
+    const course: Course = { id: 1, title: 'Test Course', description: '', duration: 0, creationDate: new Date() };
+    mockConfirmationService.confirm.and.callFake((options: any) => {
+      options.reject();
+    });
+    component.deleteCourse(course);
+    expect(mockStore.dispatch).not.toHaveBeenCalledWith(CoursesActions.deleteCourse({ id: 1 }));
+  });
+
   it('should call confirmationService.confirm on deleteCourse()', () => {
     const course: Course = { id: 1, title: 'Test Course', description: '', duration: 0, creationDate: new Date() };
     component.deleteCourse(course);

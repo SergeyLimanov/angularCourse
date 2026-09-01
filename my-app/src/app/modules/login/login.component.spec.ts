@@ -57,6 +57,20 @@ describe('LoginComponent', () => {
     expect(mockAuthService.login).toHaveBeenCalledWith('test@test.com', 'password');
   });
 
+  it('should emit loginEvent and navigate to /courses on successful submit', () => {
+    spyOn(component.loginEvent, 'emit');
+    component.login = 'test@test.com';
+    component.password = 'password';
+
+    const mockForm = { valid: true } as any;
+    component.onSubmit(mockForm);
+
+    expect(mockAuthService.login).toHaveBeenCalledWith('test@test.com', 'password');
+    expect(mockAuthService.isAuthenticated).toHaveBeenCalled();
+    expect(component.loginEvent.emit).toHaveBeenCalledWith({ login: 'test@test.com', password: 'password' });
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/courses']);
+  });
+
   it('should not call authService.login when form is invalid', () => {
     const mockForm = { valid: false } as any;
     component.onSubmit(mockForm);

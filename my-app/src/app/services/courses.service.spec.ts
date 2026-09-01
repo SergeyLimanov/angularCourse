@@ -114,4 +114,26 @@ describe('CoursesService', () => {
     expect(req.request.method).toBe('GET');
     req.flush([{ id: '1', name: 'Author 1' }]);
   });
+
+  it('should handle error on getAllCourses()', (done) => {
+    service.getAllCourses().subscribe({
+      error: (err) => {
+        expect(err).toBeTruthy();
+        done();
+      }
+    });
+    const req = httpTestingController.expectOne('/api/courses');
+    req.flush('Error', { status: 500, statusText: 'Server Error' });
+  });
+
+  it('should handle error on getCourses()', (done) => {
+    service.getCourses(0, 5).subscribe({
+      error: (err) => {
+        expect(err).toBeTruthy();
+        done();
+      }
+    });
+    const req = httpTestingController.expectOne('/api/courses?_start=0&_limit=5');
+    req.flush('Error', { status: 500, statusText: 'Server Error' });
+  });
 });
